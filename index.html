@@ -6,6 +6,7 @@
 <title>Shalom Enterprises | Waterproofing, Painting & Construction Experts</title>
 <link rel="icon" type="image/png" href="assets/favicon-64.png">
 <link rel="apple-touch-icon" href="assets/logo-mark-192.png">
+<meta name="theme-color" content="#0A1A3B">
 <meta name="description" content="Shalom Enterprises - Nagpur's trusted waterproofing, building painting, construction, furniture & fabrication experts. Terrace waterproofing, interior/exterior painting, renovation with warranty. Free site inspection in Jaripatka, Bezanbagh, Nagpur.">
 <meta name="keywords" content="Shalom Enterprises Nagpur, waterproofing Nagpur, building painting Nagpur, construction Nagpur, furniture work Nagpur, fabrication work Nagpur, plumber Nagpur, electrician Nagpur, tiles fitting Nagpur, Bezanbagh, Jaripatka">
 <link rel="canonical" href="https://shalomenterprises.co.in/">
@@ -36,126 +37,206 @@ tailwind.config = {
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Mukta:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 <style>
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Plus Jakarta Sans', sans-serif; background: #FFFDF8; color: #0A1A3B; overflow-x: hidden; }
+  html, body { overflow-x: clip; }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background: #FFFDF8; color: #0A1A3B; }
+  body.lang-hi { font-family: 'Mukta', 'Plus Jakarta Sans', sans-serif; }
+  body.lang-hi .font-serif2 { font-family: 'Mukta', sans-serif; font-weight: 800; }
+  ::selection { background: #F59E0B; color: #0A1A3B; }
   .font-serif2 { font-family: 'Fraunces', serif; }
   .hero-bg {
     background: radial-gradient(1100px 500px at 85% -5%, rgba(14,165,233,.35), transparent),
                 radial-gradient(900px 500px at 0% 10%, rgba(245,158,11,.18), transparent),
                 linear-gradient(180deg, #061233 0%, #0A1A3B 55%, #0d2456 100%);
   }
-  .glass { background: rgba(255,255,255,.08); backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,.16); }
-  .gold-btn { background: linear-gradient(135deg,#FBBF24,#F59E0B 55%,#D97706); box-shadow: 0 12px 30px -8px rgba(245,158,11,.6); transition:.3s; }
-  .gold-btn:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -8px rgba(245,158,11,.7); }
-  .card-hover { transition: .35s cubic-bezier(.2,.8,.2,1); }
-  .card-hover:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -15px rgba(10,26,59,.25); }
-  .reveal { opacity:0; transform: translateY(28px); transition: .8s cubic-bezier(.2,.8,.2,1); }
-  .reveal.visible { opacity:1; transform:none; }
-  .marquee-track { display:flex; gap:3rem; animation: scroll 22s linear infinite; width:max-content; }
-  @keyframes scroll { to { transform: translateX(-50%); } }
+  .glass { background: rgba(255,255,255,.08); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,.16); }
+  .gold-btn { background: linear-gradient(135deg,#FBBF24,#F59E0B 55%,#D97706); box-shadow: 0 12px 30px -8px rgba(245,158,11,.6); transition: box-shadow .3s; }
+  .gold-btn:hover { box-shadow: 0 18px 40px -8px rgba(245,158,11,.75); }
+  .stage { perspective: 1200px; }
+  .preserve-3d { transform-style: preserve-3d; }
+  .tilt { transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .35s; will-change: transform; }
+  .magnetic { transition: transform .3s cubic-bezier(.2,.8,.2,1); will-change: transform; display: inline-block; }
+  .h-line { display: block; overflow: hidden; }
+  .h-line > span { display: block; will-change: transform; }
+  .orb { position: absolute; border-radius: 9999px; filter: blur(90px); pointer-events: none; will-change: transform; }
+  .grain { position: fixed; inset: 0; z-index: 70; pointer-events: none; opacity: .05; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  #cursor { position: fixed; top: 0; left: 0; width: 340px; height: 340px; margin: -170px 0 0 -170px; z-index: 65;
+    pointer-events: none; border-radius: 9999px; mix-blend-mode: screen; opacity: 0;
+    background: radial-gradient(circle, rgba(245,158,11,.16), rgba(14,165,233,.10) 45%, transparent 70%); }
+  @media (pointer: coarse) { #cursor { display: none; } }
+  .marquee-track { display:flex; gap:3rem; animation: scrollX 22s linear infinite; width:max-content; }
+  @keyframes scrollX { to { transform: translateX(-50%); } }
   .tick { width:26px; height:26px; border-radius:999px; display:grid; place-items:center; background:#DCFCE7; color:#15803D; flex-shrink:0; }
-  .float-anim { animation: floaty 5s ease-in-out infinite; }
-  @keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
-  .img-zoom img { transition: .6s; } .img-zoom:hover img { transform: scale(1.07); }
+  .img-zoom { overflow: hidden; } .img-zoom img { transition: transform .6s cubic-bezier(.2,.8,.2,1); } .img-zoom:hover img { transform: scale(1.07); }
   details.faq summary::-webkit-details-marker { display:none; }
   details.faq[open] .plus { transform: rotate(45deg); }
   .plus { transition:.3s; }
-  .nav-blur { backdrop-filter: blur(16px); background: rgba(6,18,51,.82); }
+  .nav-blur { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); background: rgba(6,18,51,.82); }
   .section-tag { letter-spacing:.22em; }
   input, textarea, select { outline: none; }
   input:focus, textarea:focus { border-color:#F59E0B !important; box-shadow:0 0 0 3px rgba(245,158,11,.18); }
+  #svcView { scrollbar-width: none; }
+  #svcView::-webkit-scrollbar { display: none; }
+  .svc-card { scroll-snap-align: center; position: relative; }
+  #svcView { scroll-snap-type: x mandatory; }
+  @media (min-width: 1024px) { #svcView { scroll-snap-type: none; } }
+  .svc-num { position: absolute; top: 14px; right: 18px; font-family: 'Fraunces', serif; font-weight: 700; font-size: 2.6rem; line-height: 1; color: rgba(10,26,59,.10); pointer-events: none; }
+  body.lang-hi .svc-num { font-family: 'Mukta', sans-serif; font-weight: 800; }
+  .giant-word { -webkit-text-stroke: 1px rgba(255,255,255,.14); color: transparent; white-space: nowrap; will-change: transform; }
+  #progress { transform-origin: 0 50%; transform: scaleX(0); }
+  #nav { transition: box-shadow .3s, background .3s; }
+  #nav.scrolled { box-shadow: 0 10px 40px -10px rgba(0,0,0,.5); }
+  .scroll-cue { animation: cue 1.8s ease-in-out infinite; }
+  @keyframes cue { 0%,100% { transform: translateY(0); opacity:.9 } 50% { transform: translateY(10px); opacity:.4 } }
+  #toTop { transition: opacity .3s, transform .3s; }
+  .wa-btn { background: linear-gradient(135deg,#25D366,#128C4B); box-shadow: 0 12px 30px -8px rgba(34,197,94,.55); transition: box-shadow .3s; }
+  .wa-btn:hover { box-shadow: 0 18px 40px -8px rgba(34,197,94,.7); }
+  .h-line > span { padding-bottom: .12em; margin-bottom: -.12em; }
+  body.lang-hi #home h1 { line-height: 1.35; }
+  @media (min-width: 1024px) {
+    .svc-card .img-zoom { height: 9.5rem; }
+    .svc-card h3 { font-size: 1.02rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track, .scroll-cue { animation: none !important; }
+  }
 </style>
+<noscript><style>#loader { display: none !important; }</style></noscript>
 </head>
-<body>
+<body class="antialiased">
 
-<!-- EDIT YOUR DETAILS HERE: phone / whatsapp number badalna ho to yahi badlo -->
-<script>const BUSINESS_PHONE = "919270507958"; // <-- Shalom Enterprises real number</script>
+<script>const BUSINESS_PHONE = "919270507958"; // Shalom Enterprises real number</script>
+
+<!-- PRELOADER -->
+<div id="loader" class="fixed inset-0 z-[100] hero-bg flex flex-col items-center justify-center gap-4">
+  <img src="assets/logo-mark-192.png" alt="Shalom Enterprises" class="w-20 h-20 rounded-3xl bg-white p-1 shadow-2xl animate-pulse">
+  <p class="text-white font-extrabold tracking-[.25em] text-sm"><span data-en="SHALOM " data-hi="शलोम ">SHALOM </span><span class="text-gold" data-en="ENTERPRISES" data-hi="एंटरप्राइजेज">ENTERPRISES</span></p>
+  <div class="w-48 h-1 rounded-full bg-white/15 overflow-hidden"><div id="loadBar" class="h-full w-0" style="background:linear-gradient(90deg,#FBBF24,#F59E0B)"></div></div>
+</div>
+
+<div class="grain"></div>
+<div id="cursor"></div>
+<div id="progress" class="fixed top-0 left-0 right-0 h-1 z-[80]" style="background:linear-gradient(90deg,#FBBF24,#F59E0B,#0EA5E9)"></div>
 
 <!-- TOP BAR -->
-<div class="bg-navy text-white/90 text-xs sm:text-sm">
+<div class="bg-navy text-white/90 text-xs sm:text-sm relative z-40">
   <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-3">
-    <p class="flex items-center gap-2 truncate"><i class="fa-solid fa-location-dot text-gold"></i><span class="truncate">Ginger Mall, Jaripatka Chowk, Bezanbagh, Nagpur — All Nagpur Service</span></p>
+    <p class="flex items-center gap-2 truncate"><i class="fa-solid fa-location-dot text-gold"></i><span class="truncate" data-en="Ginger Mall, Jaripatka Chowk, Bezanbagh, Nagpur — All Nagpur Service" data-hi="जिंजर मॉल, जरिपटका चौक, बेझनबाग, नागपुर — पूरे नागपुर में सेवा">Ginger Mall, Jaripatka Chowk, Bezanbagh, Nagpur — All Nagpur Service</span></p>
     <div class="hidden sm:flex items-center gap-4">
-      <span class="flex items-center gap-1.5"><i class="fa-solid fa-clock text-gold"></i> Mon–Sun: 8am–8pm</span>
+      <span class="flex items-center gap-1.5"><i class="fa-solid fa-clock text-gold"></i> <span data-en="Mon–Sun: 8am–8pm" data-hi="सोम–रवि: सुबह 8–रात 8">Mon–Sun: 8am–8pm</span></span>
       <a id="topCall" href="tel:+919270507958" class="flex items-center gap-1.5 font-semibold text-gold"><i class="fa-solid fa-phone"></i> +91 92705 07958</a>
     </div>
   </div>
 </div>
 
 <!-- NAV -->
-<header id="nav" class="sticky top-0 z-50 transition-all hero-bg border-b border-white/10">
-  <div class="max-w-7xl mx-auto px-4 py-3.5 flex items-center justify-between">
+<header id="nav" class="sticky top-0 z-50 hero-bg border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-4 py-3.5 flex items-center justify-between gap-3">
     <a href="#home" class="flex items-center gap-3">
       <img src="assets/logo-mark-192.png" alt="Shalom Enterprises logo" class="w-12 h-12 rounded-2xl bg-white object-cover shadow-lg p-0.5">
       <div class="leading-tight">
-        <p class="text-white font-extrabold text-lg tracking-tight">SHALOM <span class="text-gold">ENTERPRISES</span></p>
-        <p class="text-white/60 text-[10px] tracking-[.18em] font-semibold">YOUR CONVENIENCE IS OUR IDENTITY</p>
+        <p class="text-white font-extrabold text-lg tracking-tight"><span data-en="SHALOM " data-hi="शलोम ">SHALOM </span><span class="text-gold" data-en="ENTERPRISES" data-hi="एंटरप्राइजेज">ENTERPRISES</span></p>
+        <p class="text-white/60 text-[10px] tracking-[.18em] font-semibold" data-en="YOUR CONVENIENCE IS OUR IDENTITY" data-hi="आपकी सुविधा ही हमारी पहचान">YOUR CONVENIENCE IS OUR IDENTITY</p>
       </div>
     </a>
     <nav class="hidden lg:flex items-center gap-7 text-white/85 text-[15px] font-medium">
-      <a href="#services" class="hover:text-gold transition">Services</a>
-      <a href="#why" class="hover:text-gold transition">Why Us</a>
-      <a href="#work" class="hover:text-gold transition">Our Work</a>
-      <a href="#reviews" class="hover:text-gold transition">Reviews</a>
-      <a href="#faq" class="hover:text-gold transition">FAQ</a>
-      <a href="#contact" class="hover:text-gold transition">Contact</a>
+      <a href="#services" class="hover:text-gold transition" data-en="Services" data-hi="सेवाएँ">Services</a>
+      <a href="#why" class="hover:text-gold transition" data-en="Why Us" data-hi="हम क्यों">Why Us</a>
+      <a href="#work" class="hover:text-gold transition" data-en="Our Work" data-hi="हमारा काम">Our Work</a>
+      <a href="#reviews" class="hover:text-gold transition" data-en="Reviews" data-hi="रिव्यू">Reviews</a>
+      <a href="#faq" class="hover:text-gold transition" data-en="FAQ" data-hi="सवाल-जवाब">FAQ</a>
+      <a href="#contact" class="hover:text-gold transition" data-en="Contact" data-hi="संपर्क">Contact</a>
     </nav>
-    <div class="hidden lg:flex items-center gap-3">
-      <a href="#contact" class="gold-btn text-navy font-bold px-5 py-2.5 rounded-xl text-sm"><i class="fa-solid fa-clipboard-check mr-1.5"></i>Free Site Visit</a>
+    <div class="hidden md:flex items-center gap-3">
+      <div class="flex items-center rounded-full glass p-1 text-xs font-bold" role="group" aria-label="Language">
+        <button data-lang-btn="en" class="px-3 py-1.5 rounded-full transition">EN</button>
+        <button data-lang-btn="hi" class="px-3 py-1.5 rounded-full transition">हिंदी</button>
+      </div>
+      <a href="#contact" class="magnetic gold-btn text-navy font-bold px-5 py-2.5 rounded-xl text-sm hidden lg:inline-block"><i class="fa-solid fa-clipboard-check mr-1.5"></i><span data-en="Free Site Visit" data-hi="फ्री साइट विज़िट">Free Site Visit</span></a>
     </div>
-    <button id="menuBtn" class="lg:hidden text-white text-2xl px-2"><i class="fa-solid fa-bars"></i></button>
+    <button id="menuBtn" class="lg:hidden text-white text-2xl px-2" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
   </div>
   <div id="mobileMenu" class="hidden lg:hidden nav-blur border-t border-white/10 px-6 py-4 flex flex-col gap-4 text-white font-medium">
-    <a href="#services">Services</a><a href="#why">Why Us</a><a href="#work">Our Work</a><a href="#reviews">Reviews</a><a href="#faq">FAQ</a>
-    <a href="#contact" class="gold-btn text-navy font-bold px-5 py-3 rounded-xl text-center">Free Site Visit</a>
+    <a href="#services" data-en="Services" data-hi="सेवाएँ">Services</a><a href="#why" data-en="Why Us" data-hi="हम क्यों">Why Us</a><a href="#work" data-en="Our Work" data-hi="हमारा काम">Our Work</a><a href="#reviews" data-en="Reviews" data-hi="रिव्यू">Reviews</a><a href="#faq" data-en="FAQ" data-hi="सवाल-जवाब">FAQ</a>
+    <div class="flex items-center gap-2">
+      <span class="text-white/60 text-sm" data-en="Language:" data-hi="भाषा:">Language:</span>
+      <div class="flex items-center rounded-full glass p-1 text-xs font-bold" role="group" aria-label="Language">
+        <button data-lang-btn="en" class="px-3 py-1.5 rounded-full transition">EN</button>
+        <button data-lang-btn="hi" class="px-3 py-1.5 rounded-full transition">हिंदी</button>
+      </div>
+    </div>
+    <a href="#contact" class="gold-btn text-navy font-bold px-5 py-3 rounded-xl text-center" data-en="Free Site Visit" data-hi="फ्री साइट विज़िट">Free Site Visit</a>
   </div>
 </header>
 
-<!-- HERO -->
+<!-- ============ HERO : 3D layered stage ============ -->
 <section id="home" class="hero-bg relative overflow-hidden">
-  <div class="max-w-7xl mx-auto px-4 pt-12 pb-10 lg:pt-20 lg:pb-16 grid lg:grid-cols-2 gap-10 items-center">
-    <div>
-      <div class="inline-flex items-center gap-2 glass rounded-full px-4 py-2 text-white text-xs sm:text-sm font-medium">
+  <div class="orb w-[520px] h-[520px] -top-40 -right-40" data-depth="0.06" style="background:rgba(14,165,233,.25)"></div>
+  <div class="orb w-[420px] h-[420px] top-1/2 -left-52" data-depth="0.1" style="background:rgba(245,158,11,.16)"></div>
+  <div class="orb w-[300px] h-[300px] bottom-0 right-1/3" data-depth="0.14" style="background:rgba(99,102,241,.20)"></div>
+
+  <div class="max-w-7xl mx-auto px-4 pt-12 pb-10 lg:pt-20 lg:pb-16 grid lg:grid-cols-2 gap-10 items-center relative">
+    <div id="heroCopy">
+      <div class="rv inline-flex items-center gap-2 glass rounded-full px-4 py-2 text-white text-xs sm:text-sm font-medium">
         <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-        Trusted in Nagpur for 15+ years • 1200+ projects done
+        <span data-en="Trusted in Nagpur for 15+ years • 1200+ projects done" data-hi="नागपुर में 15+ सालों का भरोसा • 1200+ प्रोजेक्ट पूरे">Trusted in Nagpur for 15+ years • 1200+ projects done</span>
       </div>
       <h1 class="text-white font-extrabold text-4xl sm:text-5xl lg:text-[3.6rem] leading-[1.05] mt-5 tracking-tight">
-        Leakage Band.<br><span class="font-serif2 italic font-semibold text-transparent bg-clip-text" style="background-image:linear-gradient(100deg,#FDE68A,#F59E0B)">Ghar Sundar.</span><br>Life Tension-Free.
+        <span class="h-line"><span data-en="End the Leakage." data-hi="लीकेज बंद।">End the Leakage.</span></span>
+        <span class="h-line"><span class="font-serif2 italic font-semibold text-transparent bg-clip-text" style="background-image:linear-gradient(100deg,#FDE68A,#F59E0B)" data-en="Beautify Your Home." data-hi="घर सुंदर।">Beautify Your Home.</span></span>
+        <span class="h-line"><span data-en="Live Tension-Free." data-hi="लाइफ टेंशन-फ्री।">Live Tension-Free.</span></span>
       </h1>
-      <p class="text-white/70 mt-5 text-base sm:text-lg leading-relaxed max-w-xl">Shalom Enterprises — Waterproofing, painting, construction, furniture, fabrication, plumbing, electrical aur tiles ka <span class="text-white font-semibold">complete solution with written warranty.</span> Pehle free inspection, phir sahi kaam.</p>
-      <div class="flex flex-wrap gap-3 mt-7">
-        <a id="heroCall" href="tel:+919270507958" class="gold-btn text-navy font-extrabold px-7 py-4 rounded-2xl text-base"><i class="fa-solid fa-phone mr-2"></i>Call Now</a>
-        <a id="heroWa" href="#" target="_blank" class="bg-[#22c55e] hover:bg-[#16a34a] transition text-white font-extrabold px-7 py-4 rounded-2xl text-base shadow-xl shadow-green-900/40"><i class="fa-brands fa-whatsapp mr-2 text-xl align-middle"></i>WhatsApp</a>
+      <p class="rv text-white/70 mt-5 text-base sm:text-lg leading-relaxed max-w-xl" data-en="Shalom Enterprises — complete waterproofing, painting, construction, furniture, fabrication, plumbing, electrical and tiling solutions with written warranty. Free inspection first, then the right work." data-hi="शलोम एंटरप्राइजेज — वॉटरप्रूफिंग, पेंटिंग, कंस्ट्रक्शन, फर्नीचर, फैब्रिकेशन, प्लंबिंग, इलेक्ट्रिकल और टाइल्स का संपूर्ण समाधान, लिखित वारंटी के साथ। पहले फ्री इंस्पेक्शन, फिर सही काम।">Shalom Enterprises — complete waterproofing, painting, construction, furniture, fabrication, plumbing, electrical and tiling solutions with written warranty. Free inspection first, then the right work.</p>
+      <div class="rv flex flex-wrap gap-3 mt-7">
+        <span class="magnetic"><a id="heroCall" href="tel:+919270507958" class="gold-btn text-navy font-extrabold px-7 py-4 rounded-2xl text-base inline-block"><i class="fa-solid fa-phone mr-2"></i><span data-en="Call Now" data-hi="कॉल करें">Call Now</span></a></span>
+        <span class="magnetic"><a id="heroWa" href="#" target="_blank" class="bg-[#22c55e] hover:bg-[#16a34a] transition text-white font-extrabold px-7 py-4 rounded-2xl text-base shadow-xl shadow-green-900/40 inline-block"><i class="fa-brands fa-whatsapp mr-2 text-xl align-middle"></i><span data-en="WhatsApp" data-hi="व्हाट्सऐप">WhatsApp</span></a></span>
       </div>
-      <div class="grid grid-cols-3 gap-3 mt-8 max-w-lg">
-        <div class="glass rounded-2xl p-4 text-center"><p class="text-gold font-extrabold text-2xl"><span class="counter" data-target="15">0</span>+</p><p class="text-white/70 text-xs mt-1">Years Experience</p></div>
-        <div class="glass rounded-2xl p-4 text-center"><p class="text-gold font-extrabold text-2xl"><span class="counter" data-target="1200">0</span>+</p><p class="text-white/70 text-xs mt-1">Projects Done</p></div>
-        <div class="glass rounded-2xl p-4 text-center"><p class="text-gold font-extrabold text-2xl"><span class="counter" data-target="7">0</span> Yr</p><p class="text-white/70 text-xs mt-1">Warranty Tak</p></div>
+      <div class="rv grid grid-cols-3 gap-3 mt-8 max-w-lg">
+        <div class="glass rounded-2xl p-4 text-center tilt"><p class="text-gold font-extrabold text-2xl"><span class="counter" data-target="15">0</span>+</p><p class="text-white/70 text-xs mt-1" data-en="Years Experience" data-hi="सालों का अनुभव">Years Experience</p></div>
+        <div class="glass rounded-2xl p-4 text-center tilt"><p class="text-gold font-extrabold text-2xl"><span class="counter" data-target="1200">0</span>+</p><p class="text-white/70 text-xs mt-1" data-en="Projects Completed" data-hi="पूरे प्रोजेक्ट">Projects Completed</p></div>
+        <div class="glass rounded-2xl p-4 text-center tilt"><p class="text-gold font-extrabold text-2xl"><span class="counter" data-target="7">0</span><span data-en=" Yr" data-hi=" साल"> Yr</span></p><p class="text-white/70 text-xs mt-1" data-en="Year Warranty" data-hi="साल की वारंटी">Year Warranty</p></div>
       </div>
     </div>
-    <div class="relative">
-      <div class="rounded-[2rem] overflow-hidden border-4 border-white/15 shadow-2xl img-zoom">
-        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80&auto=format&fit=crop" alt="Building waterproofing and painting work" class="w-full h-[420px] lg:h-[520px] object-cover">
-      </div>
-      <div class="absolute -left-3 sm:-left-6 top-8 glass rounded-2xl px-4 py-3 flex items-center gap-3 float-anim">
-        <div class="w-10 h-10 rounded-xl bg-green-500 grid place-items-center text-white"><i class="fa-solid fa-droplet-slash"></i></div>
-        <div><p class="text-white font-bold text-sm">100% Leakage Proof</p><p class="text-white/60 text-xs">Chemical + Membrane</p></div>
-      </div>
-      <div class="absolute -right-2 sm:-right-4 bottom-8 bg-white rounded-2xl px-4 py-3 flex items-center gap-3 shadow-2xl float-anim" style="animation-delay:1.2s">
-        <div class="flex -space-x-2">
-          <img class="w-8 h-8 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=60&auto=format&fit=crop">
-          <img class="w-8 h-8 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=60&auto=format&fit=crop">
-          <img class="w-8 h-8 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=60&auto=format&fit=crop">
+
+    <div class="relative stage" id="heroStage">
+      <div data-speed="1.12">
+        <div data-depth="0.05" class="preserve-3d">
+          <div id="heroImgWrap" class="rounded-[2rem] overflow-hidden border-4 border-white/15 shadow-2xl img-zoom">
+            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80&auto=format&fit=crop" alt="Building waterproofing and painting work" class="w-full h-[420px] lg:h-[520px] object-cover" loading="eager">
+          </div>
         </div>
-        <div><p class="font-bold text-sm text-navy">★★★★★ 4.9 Rated</p><p class="text-gray-500 text-xs">200+ Google Reviews</p></div>
+      </div>
+      <div class="absolute -left-3 sm:-left-6 top-8" data-speed="0.82">
+        <div data-depth="0.12" class="glass rounded-2xl px-4 py-3 flex items-center gap-3 shadow-2xl">
+          <div class="w-10 h-10 rounded-xl bg-green-500 grid place-items-center text-white"><i class="fa-solid fa-droplet-slash"></i></div>
+          <div><p class="text-white font-bold text-sm" data-en="100% Leakage Proof" data-hi="100% लीकेज प्रूफ">100% Leakage Proof</p><p class="text-white/60 text-xs" data-en="Chemical + Membrane" data-hi="केमिकल + मेंब्रेन">Chemical + Membrane</p></div>
+        </div>
+      </div>
+      <div class="absolute -right-2 sm:-right-4 bottom-8" data-speed="1.25">
+        <div data-depth="0.16" class="bg-white rounded-2xl px-4 py-3 flex items-center gap-3 shadow-2xl">
+          <div class="flex -space-x-2">
+            <img class="w-8 h-8 rounded-full border-2 border-white object-cover" loading="lazy" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=60&auto=format&fit=crop" alt="customer">
+            <img class="w-8 h-8 rounded-full border-2 border-white object-cover" loading="lazy" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=60&auto=format&fit=crop" alt="customer">
+            <img class="w-8 h-8 rounded-full border-2 border-white object-cover" loading="lazy" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=60&auto=format&fit=crop" alt="customer">
+          </div>
+          <div><p class="font-bold text-sm text-navy">★★★★★ <span data-en="4.9 Rated" data-hi="4.9 रेटिंग">4.9 Rated</span></p><p class="text-gray-500 text-xs" data-en="200+ Google Reviews" data-hi="200+ Google रिव्यू">200+ Google Reviews</p></div>
+        </div>
       </div>
     </div>
   </div>
-  <!-- brands strip -->
-  <div class="border-t border-white/10 bg-black/20">
+
+  <div class="rv flex justify-center pb-6">
+    <div class="scroll-cue flex flex-col items-center gap-1 text-white/60 text-xs font-semibold tracking-widest"><span data-en="SCROLL" data-hi="स्क्रॉल">SCROLL</span><i class="fa-solid fa-chevron-down"></i></div>
+  </div>
+
+  <div class="border-t border-white/10 bg-black/20 relative">
     <div class="max-w-7xl mx-auto px-4 py-4 overflow-hidden">
       <div class="marquee-track text-white/60 font-bold text-sm tracking-widest">
         <span>ASIAN PAINTS</span><span>•</span><span>DR. FIXIT</span><span>•</span><span>BERGER</span><span>•</span><span>NEROLAC</span><span>•</span><span>PIDILITE</span><span>•</span><span>FOSROC</span><span>•</span>
@@ -166,125 +247,154 @@ tailwind.config = {
 </section>
 
 <!-- TRUST BAR -->
-<section class="max-w-7xl mx-auto px-4 -mt-0 py-8">
-  <div class="bg-white rounded-3xl shadow-xl shadow-navy/10 border border-orange-100 px-6 py-5 flex flex-wrap items-center justify-center sm:justify-between gap-4 reveal">
-    <div class="flex items-center gap-3"><div class="tick"><i class="fa-solid fa-check text-sm"></i></div><p class="font-semibold text-sm">Free Site Inspection</p></div>
-    <div class="flex items-center gap-3"><div class="tick"><i class="fa-solid fa-check text-sm"></i></div><p class="font-semibold text-sm">Written Warranty</p></div>
-    <div class="flex items-center gap-3"><div class="tick"><i class="fa-solid fa-check text-sm"></i></div><p class="font-semibold text-sm">Branded Material Only</p></div>
-    <div class="flex items-center gap-3"><div class="tick"><i class="fa-solid fa-check text-sm"></i></div><p class="font-semibold text-sm">Trained Team</p></div>
+<section class="max-w-7xl mx-auto px-4 py-8">
+  <div class="rv bg-white rounded-3xl shadow-xl shadow-navy/10 border border-orange-100 px-6 py-5 flex flex-wrap items-center justify-center sm:justify-between gap-4 tilt">
+    <div class="flex items-center gap-3"><div class="tick"><i class="fa-solid fa-check text-sm"></i></div><p class="font-semibold text-sm" data-en="Free Site Inspection" data-hi="फ्री साइट इंस्पेक्शन">Free Site Inspection</p></div>
+    <div class="flex items-center gap-3"><div class="tick"><i class="fa-solid fa-check text-sm"></i></div><p class="font-semibold text-sm" data-en="Written Warranty" data-hi="लिखित वारंटी">Written Warranty</p></div>
+    <div class="flex items-center gap-3"><div class="tick"><i class="fa-solid fa-check text-sm"></i></div><p class="font-semibold text-sm" data-en="Branded Material Only" data-hi="सिर्फ ब्रांडेड मटेरियल">Branded Material Only</p></div>
+    <div class="flex items-center gap-3"><div class="tick"><i class="fa-solid fa-check text-sm"></i></div><p class="font-semibold text-sm" data-en="Trained Team" data-hi="ट्रेंड टीम">Trained Team</p></div>
   </div>
 </section>
 
-<!-- SERVICES -->
-<section id="services" class="max-w-7xl mx-auto px-4 py-10 lg:py-16">
-  <p class="section-tag text-golddark font-extrabold text-xs reveal">— OUR SERVICES</p>
-  <div class="flex flex-wrap items-end justify-between gap-4 mt-2">
-    <h2 class="font-serif2 text-3xl sm:text-5xl font-semibold tracking-tight reveal">Har problem ka <span class="italic text-royal">pakka solution</span></h2>
-    <p class="text-gray-500 max-w-md reveal">Waterproofing, painting, construction, furniture, fabrication, plumbing, electrical aur tiles — ek hi team, ek hi warranty.</p>
+<!-- ============ SERVICES : pinned horizontal 3D journey (desktop) ============ -->
+<section id="services" class="py-10 lg:py-0 relative">
+  <div class="max-w-7xl mx-auto px-4 lg:pt-16">
+    <p class="section-tag text-golddark font-extrabold text-xs rv" data-en="— OUR SERVICES" data-hi="— हमारी सेवाएँ">— OUR SERVICES</p>
+    <div class="flex flex-wrap items-end justify-between gap-4 mt-2">
+      <h2 class="rv font-serif2 text-3xl sm:text-5xl font-semibold tracking-tight"><span data-en="One team for " data-hi="हर प्रॉब्लम का ">One team for </span><span class="italic text-royal" data-en="every problem" data-hi="पक्का समाधान">every problem</span></h2>
+      <p class="rv text-gray-500 max-w-md" data-en="Waterproofing, painting, construction, furniture, fabrication, plumbing, electrical and tiling — one team, one warranty." data-hi="वॉटरप्रूफिंग, पेंटिंग, कंस्ट्रक्शन, फर्नीचर, फैब्रिकेशन, प्लंबिंग, इलेक्ट्रिकल और टाइल्स — एक ही टीम, एक ही वारंटी।">Waterproofing, painting, construction, furniture, fabrication, plumbing, electrical and tiling — one team, one warranty.</p>
+    </div>
+    <p class="rv hidden lg:flex items-center gap-2 mt-4 text-sm font-bold text-royal"><i class="fa-solid fa-arrows-left-right"></i> <span data-en="Keep scrolling — services slide in" data-hi="स्क्रॉल करते जाइए — सेवाएँ स्लाइड होंगी">Keep scrolling — services slide in</span></p>
   </div>
-  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
-    <!-- card -->
-    <div class="card-hover bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 reveal">
-      <div class="h-52 overflow-hidden img-zoom"><img src="https://images.unsplash.com/photo-1632759145351-1d592919f522?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Terrace waterproofing"></div>
-      <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#0EA5E9,#123C9A)"><i class="fa-solid fa-house-flood-water"></i></div>
-      <h3 class="font-extrabold text-lg mt-3">Terrace & Roof Waterproofing</h3>
-      <p class="text-gray-500 text-sm mt-2">Crack filling, chemical coating, membrane & brick-bat coba. Barish ka leakage 100% band.</p>
-      <p class="mt-3 text-royal font-bold text-sm">7 saal warranty tak →</p></div>
-    </div>
-    <div class="card-hover bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 reveal">
-      <div class="h-52 overflow-hidden img-zoom"><img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Bathroom waterproofing"></div>
-      <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#14B8A6,#0F766E)"><i class="fa-solid fa-shower"></i></div>
-      <h3 class="font-extrabold text-lg mt-3">Bathroom & Tank Waterproofing</h3>
-      <p class="text-gray-500 text-sm mt-2">Bina tod-phod injection grouting + tile joint epoxy. Neeche wale flat me leakage band.</p>
-      <p class="mt-3 text-royal font-bold text-sm">No-breakage option →</p></div>
-    </div>
-    <div class="card-hover bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 reveal">
-      <div class="h-52 overflow-hidden img-zoom"><img src="https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Exterior painting"></div>
-      <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#F59E0B,#D97706)"><i class="fa-solid fa-paint-roller"></i></div>
-      <h3 class="font-extrabold text-lg mt-3">Building Painting (Interior & Exterior)</h3>
-      <p class="text-gray-500 text-sm mt-2">Ghar, society, shop aur full building painting — putty, primer, Asian / Berger paints, texture & design.</p>
-      <p class="mt-3 text-royal font-bold text-sm">Colour shade card free →</p></div>
-    </div>
-    <div class="card-hover bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 reveal">
-      <div class="h-52 overflow-hidden img-zoom"><img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Building repair"></div>
-      <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#6366F1,#4338CA)"><i class="fa-solid fa-helmet-safety"></i></div>
-      <h3 class="font-extrabold text-lg mt-3">Construction & Building Repair</h3>
-      <p class="text-gray-500 text-sm mt-2">New construction, structural repair, plaster, RCC work, society & bungalow renovation — neev se finish tak.</p>
-      <p class="mt-3 text-royal font-bold text-sm">Society work specialist →</p></div>
-    </div>
-    <div class="card-hover bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 reveal">
-      <div class="h-52 overflow-hidden img-zoom"><img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Wall crack repair"></div>
-      <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#EC4899,#BE185D)"><i class="fa-solid fa-trowel-bricks"></i></div>
-      <h3 class="font-extrabold text-lg mt-3">Crack Repair & Damp Treatment</h3>
-      <p class="text-gray-500 text-sm mt-2">Wall seepage, fungus, peeling paint ka permanent ilaj — source se repair, sirf paint nahi.</p>
-      <p class="mt-3 text-royal font-bold text-sm">Seepage diagnosis free →</p></div>
-    </div>
-    <div class="card-hover bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 reveal">
-      <div class="h-52 overflow-hidden img-zoom"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Furniture work"></div>
-      <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#92400E,#B45309)"><i class="fa-solid fa-couch"></i></div>
-      <h3 class="font-extrabold text-lg mt-3">Furniture Work</h3>
-      <p class="text-gray-500 text-sm mt-2">Modular kitchen, wardrobe, bed, sofa repair, polish aur custom wood work — ghar aur office dono ke liye.</p>
-      <p class="mt-3 text-royal font-bold text-sm">Design + fitting sahit →</p></div>
-    </div>
-    <div class="card-hover bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 reveal">
-      <div class="h-52 overflow-hidden img-zoom"><img src="https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Fabrication work"></div>
-      <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#475569,#0F172A)"><i class="fa-solid fa-wrench"></i></div>
-      <h3 class="font-extrabold text-lg mt-3">Fabrication Work</h3>
-      <p class="text-gray-500 text-sm mt-2">Grill, gate, shed, staircase railing, MS / SS fabrication aur welding work — mazboot aur finishing ke saath.</p>
-      <p class="mt-3 text-royal font-bold text-sm">MS / SS specialist →</p></div>
-    </div>
-    <div class="card-hover bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 reveal">
-      <div class="h-52 overflow-hidden img-zoom"><img src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Plumbing work"></div>
-      <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#0284C7,#0369A1)"><i class="fa-solid fa-wrench"></i></div>
-      <h3 class="font-extrabold text-lg mt-3">Plumbing Work</h3>
-      <p class="text-gray-500 text-sm mt-2">Leakage pipe, tap-mixer, sanitary fitting, bathroom pipeline aur full plumbing line work — saaf fitting, no seepage.</p>
-      <p class="mt-3 text-royal font-bold text-sm">Leakage + fitting expert →</p></div>
-    </div>
-    <div class="card-hover bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 reveal">
-      <div class="h-52 overflow-hidden img-zoom"><img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Electrician work"></div>
-      <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#FACC15,#CA8A04)"><i class="fa-solid fa-bolt"></i></div>
-      <h3 class="font-extrabold text-lg mt-3">Electrician Work</h3>
-      <p class="text-gray-500 text-sm mt-2">House wiring, switch-board, fan-light fitting, MCB panel aur fault repair — safe wiring, branded wire ke saath.</p>
-      <p class="mt-3 text-royal font-bold text-sm">Safe + branded wiring →</p></div>
-    </div>
-    <div class="card-hover bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 reveal">
-      <div class="h-52 overflow-hidden img-zoom"><img src="https://images.unsplash.com/photo-1620626011761-996317b8d101?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Tiles fitting work"></div>
-      <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#0D9488,#115E59)"><i class="fa-solid fa-border-all"></i></div>
-      <h3 class="font-extrabold text-lg mt-3">Tiles Fitting</h3>
-      <p class="text-gray-500 text-sm mt-2">Floor, wall, bathroom aur kitchen tiles — straight line finishing, waterproof base ke saath pakki fitting.</p>
-      <p class="mt-3 text-royal font-bold text-sm">Finishing guarantee →</p></div>
-    </div>
-    <div class="card-hover rounded-3xl overflow-hidden shadow-lg reveal" style="background:linear-gradient(135deg,#0A1A3B,#123C9A)">
-      <div class="p-8 h-full flex flex-col justify-center text-white">
-        <h3 class="font-serif2 text-2xl">Confused ho?<br><span class="italic text-gold">Free visit</span> book karo.</h3>
-        <p class="text-white/70 text-sm mt-3">Engineer aakar photo + moisture check karke sahi quotation dega. No advance pressure.</p>
-        <a href="#contact" class="gold-btn text-navy font-extrabold px-6 py-3.5 rounded-2xl mt-6 text-center">Book Free Inspection <i class="fa-solid fa-arrow-right ml-1"></i></a>
-        <p class="text-white/50 text-xs mt-3 text-center">Same-day visit in Nagpur</p>
+
+  <div id="svcPin" class="lg:h-screen flex flex-col justify-center overflow-hidden py-8 lg:py-0">
+    <div id="svcView" class="overflow-x-auto lg:overflow-visible">
+      <div id="svcTrack" class="flex gap-5 w-max px-4 lg:px-8 items-stretch will-change-transform">
+
+        <div class="svc-card tilt bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 w-[82vw] sm:w-[400px] lg:w-[380px] shrink-0">
+          <span class="svc-num">01</span>
+          <div class="h-52 overflow-hidden img-zoom"><img loading="lazy" src="https://images.unsplash.com/photo-1632759145351-1d592919f522?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Terrace waterproofing"></div>
+          <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#0EA5E9,#123C9A)"><i class="fa-solid fa-house-flood-water"></i></div>
+          <h3 class="font-extrabold text-lg mt-3" data-en="Terrace & Roof Waterproofing" data-hi="टेरेस और रूफ वॉटरप्रूफिंग">Terrace & Roof Waterproofing</h3>
+          <p class="text-gray-500 text-sm mt-2" data-en="Crack filling, chemical coating, membrane and brick-bat coba. Stops monsoon leakage 100%." data-hi="क्रैक फिलिंग, केमिकल कोटिंग, मेंब्रेन और ब्रिक-बैट कोबा। बारिश का लीकेज 100% बंद।">Crack filling, chemical coating, membrane and brick-bat coba. Stops monsoon leakage 100%.</p>
+          <p class="mt-3 text-royal font-bold text-sm" data-en="Up to 7-year warranty →" data-hi="7 साल तक वारंटी →">Up to 7-year warranty →</p></div>
+        </div>
+
+        <div class="svc-card tilt bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 w-[82vw] sm:w-[400px] lg:w-[380px] shrink-0">
+          <span class="svc-num">02</span>
+          <div class="h-52 overflow-hidden img-zoom"><img loading="lazy" src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Bathroom waterproofing"></div>
+          <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#14B8A6,#0F766E)"><i class="fa-solid fa-shower"></i></div>
+          <h3 class="font-extrabold text-lg mt-3" data-en="Bathroom & Tank Waterproofing" data-hi="बाथरूम और टैंक वॉटरप्रूफिंग">Bathroom & Tank Waterproofing</h3>
+          <p class="text-gray-500 text-sm mt-2" data-en="Injection grouting and tile-joint epoxy without breaking tiles. Stops leakage to the flat below." data-hi="बिना तोड़-फोड़ इंजेक्शन ग्राउटिंग + टाइल जॉइंट एपॉक्सी। नीचे वाले फ्लैट में लीकेज बंद।">Injection grouting and tile-joint epoxy without breaking tiles. Stops leakage to the flat below.</p>
+          <p class="mt-3 text-royal font-bold text-sm" data-en="No-breakage option →" data-hi="बिना तोड़े विकल्प →">No-breakage option →</p></div>
+        </div>
+
+        <div class="svc-card tilt bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 w-[82vw] sm:w-[400px] lg:w-[380px] shrink-0">
+          <span class="svc-num">03</span>
+          <div class="h-52 overflow-hidden img-zoom"><img loading="lazy" src="https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Exterior painting"></div>
+          <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#F59E0B,#D97706)"><i class="fa-solid fa-paint-roller"></i></div>
+          <h3 class="font-extrabold text-lg mt-3" data-en="Building Painting (Interior & Exterior)" data-hi="बिल्डिंग पेंटिंग (इंटीरियर और एक्सटीरियर)">Building Painting (Interior & Exterior)</h3>
+          <p class="text-gray-500 text-sm mt-2" data-en="Homes, societies, shops and full buildings — putty, primer, Asian / Berger paints, textures and designs." data-hi="घर, सोसायटी, दुकान और पूरी बिल्डिंग — पुट्टी, प्राइमर, Asian / Berger पेंट, टेक्सचर और डिज़ाइन।">Homes, societies, shops and full buildings — putty, primer, Asian / Berger paints, textures and designs.</p>
+          <p class="mt-3 text-royal font-bold text-sm" data-en="Free colour shade card →" data-hi="फ्री कलर शेड कार्ड →">Free colour shade card →</p></div>
+        </div>
+
+        <div class="svc-card tilt bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 w-[82vw] sm:w-[400px] lg:w-[380px] shrink-0">
+          <span class="svc-num">04</span>
+          <div class="h-52 overflow-hidden img-zoom"><img loading="lazy" src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Building repair"></div>
+          <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#6366F1,#4338CA)"><i class="fa-solid fa-helmet-safety"></i></div>
+          <h3 class="font-extrabold text-lg mt-3" data-en="Construction & Building Repair" data-hi="कंस्ट्रक्शन और बिल्डिंग रिपेयर">Construction & Building Repair</h3>
+          <p class="text-gray-500 text-sm mt-2" data-en="New construction, structural repair, plaster, RCC work, society and bungalow renovation — from foundation to finish." data-hi="नया कंस्ट्रक्शन, स्ट्रक्चरल रिपेयर, प्लास्टर, RCC वर्क, सोसायटी और बंगलो रेनोवेशन — नींव से फिनिश तक।">New construction, structural repair, plaster, RCC work, society and bungalow renovation — from foundation to finish.</p>
+          <p class="mt-3 text-royal font-bold text-sm" data-en="Society work specialists →" data-hi="सोसायटी वर्क स्पेशलिस्ट →">Society work specialists →</p></div>
+        </div>
+
+        <div class="svc-card tilt bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 w-[82vw] sm:w-[400px] lg:w-[380px] shrink-0">
+          <span class="svc-num">05</span>
+          <div class="h-52 overflow-hidden img-zoom"><img loading="lazy" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Wall crack repair"></div>
+          <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#EC4899,#BE185D)"><i class="fa-solid fa-trowel-bricks"></i></div>
+          <h3 class="font-extrabold text-lg mt-3" data-en="Crack Repair & Damp Treatment" data-hi="क्रैक रिपेयर और सीलन उपचार">Crack Repair & Damp Treatment</h3>
+          <p class="text-gray-500 text-sm mt-2" data-en="Permanent fix for wall seepage, fungus and peeling paint — we repair the source, not just repaint." data-hi="दीवार की सीलन, फंगस और उखड़ते पेंट का स्थायी इलाज — सिर्फ पेंट नहीं, जड़ से रिपेयर।">Permanent fix for wall seepage, fungus and peeling paint — we repair the source, not just repaint.</p>
+          <p class="mt-3 text-royal font-bold text-sm" data-en="Free seepage diagnosis →" data-hi="फ्री सीलन जांच →">Free seepage diagnosis →</p></div>
+        </div>
+
+        <div class="svc-card tilt bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 w-[82vw] sm:w-[400px] lg:w-[380px] shrink-0">
+          <span class="svc-num">06</span>
+          <div class="h-52 overflow-hidden img-zoom"><img loading="lazy" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Furniture work"></div>
+          <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#92400E,#B45309)"><i class="fa-solid fa-couch"></i></div>
+          <h3 class="font-extrabold text-lg mt-3" data-en="Furniture Work" data-hi="फर्नीचर वर्क">Furniture Work</h3>
+          <p class="text-gray-500 text-sm mt-2" data-en="Modular kitchens, wardrobes, beds, sofa repair, polish and custom woodwork — for homes and offices." data-hi="मॉड्यूलर किचन, वॉर्डरोब, बेड, सोफा रिपेयर, पॉलिश और कस्टम वुड वर्क — घर और ऑफिस दोनों के लिए।">Modular kitchens, wardrobes, beds, sofa repair, polish and custom woodwork — for homes and offices.</p>
+          <p class="mt-3 text-royal font-bold text-sm" data-en="Design + fitting included →" data-hi="डिज़ाइन + फिटिंग सहित →">Design + fitting included →</p></div>
+        </div>
+
+        <div class="svc-card tilt bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 w-[82vw] sm:w-[400px] lg:w-[380px] shrink-0">
+          <span class="svc-num">07</span>
+          <div class="h-52 overflow-hidden img-zoom"><img loading="lazy" src="https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Fabrication work"></div>
+          <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#475569,#0F172A)"><i class="fa-solid fa-wrench"></i></div>
+          <h3 class="font-extrabold text-lg mt-3" data-en="Fabrication Work" data-hi="फैब्रिकेशन वर्क">Fabrication Work</h3>
+          <p class="text-gray-500 text-sm mt-2" data-en="Grills, gates, sheds, staircase railings, MS / SS fabrication and welding — strong with fine finishing." data-hi="ग्रिल, गेट, शेड, सीढ़ी की रेलिंग, MS / SS फैब्रिकेशन और वेल्डिंग — मज़बूत और फिनिशिंग के साथ।">Grills, gates, sheds, staircase railings, MS / SS fabrication and welding — strong with fine finishing.</p>
+          <p class="mt-3 text-royal font-bold text-sm" data-en="MS / SS specialists →" data-hi="MS / SS स्पेशलिस्ट →">MS / SS specialists →</p></div>
+        </div>
+
+        <div class="svc-card tilt bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 w-[82vw] sm:w-[400px] lg:w-[380px] shrink-0">
+          <span class="svc-num">08</span>
+          <div class="h-52 overflow-hidden img-zoom"><img loading="lazy" src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Plumbing work"></div>
+          <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#0284C7,#0369A1)"><i class="fa-solid fa-wrench"></i></div>
+          <h3 class="font-extrabold text-lg mt-3" data-en="Plumbing Work" data-hi="प्लंबिंग वर्क">Plumbing Work</h3>
+          <p class="text-gray-500 text-sm mt-2" data-en="Leaking pipes, taps and mixers, sanitary fitting, bathroom pipelines and complete plumbing lines — clean fitting, no seepage." data-hi="लीकेज पाइप, नल-मिक्सर, सैनिटरी फिटिंग, बाथरूम पाइपलाइन और पूरी प्लंबिंग लाइन — साफ फिटिंग, कोई सीलन नहीं।">Leaking pipes, taps and mixers, sanitary fitting, bathroom pipelines and complete plumbing lines — clean fitting, no seepage.</p>
+          <p class="mt-3 text-royal font-bold text-sm" data-en="Leakage + fitting experts →" data-hi="लीकेज + फिटिंग एक्सपर्ट →">Leakage + fitting experts →</p></div>
+        </div>
+
+        <div class="svc-card tilt bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 w-[82vw] sm:w-[400px] lg:w-[380px] shrink-0">
+          <span class="svc-num">09</span>
+          <div class="h-52 overflow-hidden img-zoom"><img loading="lazy" src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Electrician work"></div>
+          <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#FACC15,#CA8A04)"><i class="fa-solid fa-bolt"></i></div>
+          <h3 class="font-extrabold text-lg mt-3" data-en="Electrician Work" data-hi="इलेक्ट्रीशियन वर्क">Electrician Work</h3>
+          <p class="text-gray-500 text-sm mt-2" data-en="House wiring, switchboards, fan and light fitting, MCB panels and fault repair — safe wiring with branded wires." data-hi="हाउस वायरिंग, स्विच-बोर्ड, पंखा-लाइट फिटिंग, MCB पैनल और फॉल्ट रिपेयर — ब्रांडेड वायर के साथ सुरक्षित वायरिंग।">House wiring, switchboards, fan and light fitting, MCB panels and fault repair — safe wiring with branded wires.</p>
+          <p class="mt-3 text-royal font-bold text-sm" data-en="Safe, branded wiring →" data-hi="सुरक्षित, ब्रांडेड वायरिंग →">Safe, branded wiring →</p></div>
+        </div>
+
+        <div class="svc-card tilt bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg shadow-navy/5 w-[82vw] sm:w-[400px] lg:w-[380px] shrink-0">
+          <span class="svc-num">10</span>
+          <div class="h-52 overflow-hidden img-zoom"><img loading="lazy" src="https://images.unsplash.com/photo-1620626011761-996317b8d101?w=800&q=80&auto=format&fit=crop" class="w-full h-full object-cover" alt="Tiles fitting work"></div>
+          <div class="p-6"><div class="w-11 h-11 -mt-12 relative rounded-2xl grid place-items-center text-white text-lg shadow-lg" style="background:linear-gradient(135deg,#0D9488,#115E59)"><i class="fa-solid fa-border-all"></i></div>
+          <h3 class="font-extrabold text-lg mt-3" data-en="Tiles Fitting" data-hi="टाइल्स फिटिंग">Tiles Fitting</h3>
+          <p class="text-gray-500 text-sm mt-2" data-en="Floor, wall, bathroom and kitchen tiles — straight-line finishing over a waterproof base for a lasting fit." data-hi="फर्श, दीवार, बाथरूम और किचन टाइल्स — वॉटरप्रूफ बेस पर सीधी लाइन फिनिशिंग के साथ पक्की फिटिंग।">Floor, wall, bathroom and kitchen tiles — straight-line finishing over a waterproof base for a lasting fit.</p>
+          <p class="mt-3 text-royal font-bold text-sm" data-en="Finishing guaranteed →" data-hi="फिनिशिंग की गारंटी →">Finishing guaranteed →</p></div>
+        </div>
+
+        <div class="svc-card rounded-3xl overflow-hidden shadow-lg w-[82vw] sm:w-[400px] lg:w-[380px] shrink-0" style="background:linear-gradient(135deg,#0A1A3B,#123C9A)">
+          <div class="p-8 h-full min-h-[420px] flex flex-col justify-center text-white">
+            <h3 class="font-serif2 text-2xl" data-en="Confused? Book a free visit." data-hi="कन्फ्यूज़ हैं? फ्री विज़िट बुक करें।">Confused? Book a free visit.</h3>
+            <p class="text-white/70 text-sm mt-3" data-en="Our engineer visits, checks photos and moisture, and gives the right quotation. No advance pressure." data-hi="इंजीनियर आकर फोटो + नमी की जांच करके सही कोटेशन देगा। कोई एडवांस का दबाव नहीं।">Our engineer visits, checks photos and moisture, and gives the right quotation. No advance pressure.</p>
+            <span class="magnetic mt-6"><a href="#contact" class="gold-btn text-navy font-extrabold px-6 py-3.5 rounded-2xl text-center inline-block"><span data-en="Book Free Inspection" data-hi="फ्री इंस्पेक्शन बुक करें">Book Free Inspection</span> <i class="fa-solid fa-arrow-right ml-1"></i></a></span>
+            <p class="text-white/50 text-xs mt-3 text-center" data-en="Same-day visit in Nagpur" data-hi="नागपुर में उसी दिन विज़िट">Same-day visit in Nagpur</p>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 </section>
 
 <!-- WHY -->
-<section id="why" class="py-12 lg:py-20" style="background:linear-gradient(180deg,#FFF9F0,#fff)">
+<section id="why" class="py-12 lg:py-20 relative overflow-hidden" style="background:linear-gradient(180deg,#FFF9F0,#fff)">
   <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-10 items-center">
-    <div class="relative reveal">
+    <div class="relative rv">
       <div class="grid grid-cols-2 gap-4">
-        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&q=80&auto=format&fit=crop" class="rounded-3xl h-64 w-full object-cover shadow-xl" alt="Worker">
-        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=80&auto=format&fit=crop" class="rounded-3xl h-64 w-full object-cover shadow-xl mt-8" alt="Interior">
+        <div data-speed="0.9"><div class="pimg rounded-3xl overflow-hidden shadow-xl"><img loading="lazy" src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&q=80&auto=format&fit=crop" class="rounded-3xl h-64 w-full object-cover scale-110" alt="Worker"></div></div>
+        <div data-speed="1.12"><div class="pimg rounded-3xl overflow-hidden shadow-xl mt-8"><img loading="lazy" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=80&auto=format&fit=crop" class="rounded-3xl h-64 w-full object-cover scale-110" alt="Interior"></div></div>
       </div>
       <div class="absolute left-1/2 -translate-x-1/2 -bottom-6 bg-navy text-white rounded-2xl px-6 py-4 shadow-2xl flex items-center gap-4">
         <p class="font-serif2 text-4xl text-gold font-semibold">15+</p>
-        <p class="text-sm text-white/80 leading-snug">saal ka bharosa<br>Nagpur me</p>
+        <p class="text-sm text-white/80 leading-snug" data-en="years of trust across Nagpur" data-hi="सालों का भरोसा, नागपुर में">years of trust across Nagpur</p>
       </div>
     </div>
     <div>
-      <p class="section-tag text-golddark font-extrabold text-xs reveal">— WHY SHALOM</p>
-      <h2 class="font-serif2 text-3xl sm:text-5xl font-semibold mt-2 reveal">Local mistri nahi,<br><span class="italic text-royal">professional company</span> ka kaam</h2>
+      <p class="section-tag text-golddark font-extrabold text-xs rv" data-en="— WHY SHALOM" data-hi="— शलोम क्यों">— WHY SHALOM</p>
+      <h2 class="rv font-serif2 text-3xl sm:text-5xl font-semibold mt-2"><span data-en="Not a local mistri —" data-hi="लोकल मिस्त्री नहीं —">Not a local mistri —</span><br><span class="italic text-royal" data-en="a professional company" data-hi="प्रोफेशनल कंपनी का काम">a professional company</span></h2>
       <div class="mt-7 space-y-4">
-        <div class="flex gap-4 bg-white p-5 rounded-2xl border border-orange-100 shadow-sm reveal"><div class="tick mt-0.5"><i class="fa-solid fa-check text-sm"></i></div><div><p class="font-bold">Pehle diagnosis, phir quotation</p><p class="text-gray-500 text-sm">Moisture meter se leakage ka source dhoondte hain. Andaze se kaam nahi.</p></div></div>
-        <div class="flex gap-4 bg-white p-5 rounded-2xl border border-orange-100 shadow-sm reveal"><div class="tick mt-0.5"><i class="fa-solid fa-check text-sm"></i></div><div><p class="font-bold">Branded chemical + bill ke saath</p><p class="text-gray-500 text-sm">Dr. Fixit / Fosroc / Asian Paints — jo lagega, photo-video ke saath proof.</p></div></div>
-        <div class="flex gap-4 bg-white p-5 rounded-2xl border border-orange-100 shadow-sm reveal"><div class="tick mt-0.5"><i class="fa-solid fa-check text-sm"></i></div><div><p class="font-bold">Written warranty + after-service</p><p class="text-gray-500 text-sm">Kaam ke baad bhi phone uthate hain. Yehi sabse bada farak hai.</p></div></div>
+        <div class="rv tilt flex gap-4 bg-white p-5 rounded-2xl border border-orange-100 shadow-sm"><div class="tick mt-0.5"><i class="fa-solid fa-check text-sm"></i></div><div><p class="font-bold" data-en="Diagnosis first, quotation after" data-hi="पहले जांच, फिर कोटेशन">Diagnosis first, quotation after</p><p class="text-gray-500 text-sm" data-en="We find the leakage source with a moisture meter. No guesswork." data-hi="मॉइस्चर मीटर से लीकेज का स्रोत खोजते हैं। अंदाज़े से काम नहीं।">We find the leakage source with a moisture meter. No guesswork.</p></div></div>
+        <div class="rv tilt flex gap-4 bg-white p-5 rounded-2xl border border-orange-100 shadow-sm"><div class="tick mt-0.5"><i class="fa-solid fa-check text-sm"></i></div><div><p class="font-bold" data-en="Branded chemicals with bills" data-hi="बिल के साथ ब्रांडेड केमिकल">Branded chemicals with bills</p><p class="text-gray-500 text-sm" data-en="Dr. Fixit / Fosroc / Asian Paints — with photo-video proof of everything used." data-hi="Dr. Fixit / Fosroc / Asian Paints — जो लगा, फोटो-वीडियो प्रूफ के साथ।">Dr. Fixit / Fosroc / Asian Paints — with photo-video proof of everything used.</p></div></div>
+        <div class="rv tilt flex gap-4 bg-white p-5 rounded-2xl border border-orange-100 shadow-sm"><div class="tick mt-0.5"><i class="fa-solid fa-check text-sm"></i></div><div><p class="font-bold" data-en="Written warranty + after-service" data-hi="लिखित वारंटी + आफ्टर-सर्विस">Written warranty + after-service</p><p class="text-gray-500 text-sm" data-en="We still pick up the phone after the work is done. That is the real difference." data-hi="काम के बाद भी फोन उठाते हैं। यही सबसे बड़ा फर्क है।">We still pick up the phone after the work is done. That is the real difference.</p></div></div>
       </div>
     </div>
   </div>
@@ -292,139 +402,394 @@ tailwind.config = {
 
 <!-- PROCESS -->
 <section class="max-w-7xl mx-auto px-4 py-10">
-  <h2 class="font-serif2 text-3xl sm:text-4xl font-semibold text-center reveal">Kaam kaise hota hai? <span class="italic text-royal">4 simple steps</span></h2>
-  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-8">
-    <div class="bg-navy text-white rounded-3xl p-6 card-hover reveal"><p class="text-gold font-extrabold text-4xl font-serif2">01</p><h3 class="font-bold mt-2"><i class="fa-solid fa-phone-volume mr-2 text-gold"></i>Call / WhatsApp</h3><p class="text-white/65 text-sm mt-2">Problem ki photo bhejo, same-day visit fix karo.</p></div>
-    <div class="bg-white border border-gray-100 rounded-3xl p-6 card-hover shadow-lg reveal"><p class="text-gold font-extrabold text-4xl font-serif2">02</p><h3 class="font-bold mt-2"><i class="fa-solid fa-magnifying-glass mr-2 text-royal"></i>Free Inspection</h3><p class="text-gray-500 text-sm mt-2">Site check + measurement + transparent quotation.</p></div>
-    <div class="bg-white border border-gray-100 rounded-3xl p-6 card-hover shadow-lg reveal"><p class="text-gold font-extrabold text-4xl font-serif2">03</p><h3 class="font-bold mt-2"><i class="fa-solid fa-screwdriver-wrench mr-2 text-royal"></i>Professional Work</h3><p class="text-gray-500 text-sm mt-2">Trained team, daily photo update, time par finish.</p></div>
-    <div class="bg-white border border-gray-100 rounded-3xl p-6 card-hover shadow-lg reveal"><p class="text-gold font-extrabold text-4xl font-serif2">04</p><h3 class="font-bold mt-2"><i class="fa-solid fa-file-shield mr-2 text-royal"></i>Warranty Card</h3><p class="text-gray-500 text-sm mt-2">Payment ke baad written warranty + free checkup.</p></div>
+  <h2 class="rv font-serif2 text-3xl sm:text-4xl font-semibold text-center"><span data-en="How does it work? " data-hi="काम कैसे होता है? ">How does it work? </span><span class="italic text-royal" data-en="4 simple steps" data-hi="4 आसान स्टेप">4 simple steps</span></h2>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-8" style="perspective:1200px">
+    <div class="rv tilt bg-navy text-white rounded-3xl p-6"><p class="text-gold font-extrabold text-4xl font-serif2">01</p><h3 class="font-bold mt-2"><i class="fa-solid fa-phone-volume mr-2 text-gold"></i><span data-en="Call / WhatsApp" data-hi="कॉल / व्हाट्सऐप">Call / WhatsApp</span></h3><p class="text-white/65 text-sm mt-2" data-en="Send a photo of the problem and fix a same-day visit." data-hi="प्रॉब्लम की फोटो भेजें, उसी दिन विज़िट फिक्स करें।">Send a photo of the problem and fix a same-day visit.</p></div>
+    <div class="rv tilt bg-white border border-gray-100 rounded-3xl p-6 shadow-lg"><p class="text-gold font-extrabold text-4xl font-serif2">02</p><h3 class="font-bold mt-2"><i class="fa-solid fa-magnifying-glass mr-2 text-royal"></i><span data-en="Free Inspection" data-hi="फ्री इंस्पेक्शन">Free Inspection</span></h3><p class="text-gray-500 text-sm mt-2" data-en="Site check, measurement and a transparent quotation." data-hi="साइट चेक + माप + पारदर्शी कोटेशन।">Site check, measurement and a transparent quotation.</p></div>
+    <div class="rv tilt bg-white border border-gray-100 rounded-3xl p-6 shadow-lg"><p class="text-gold font-extrabold text-4xl font-serif2">03</p><h3 class="font-bold mt-2"><i class="fa-solid fa-screwdriver-wrench mr-2 text-royal"></i><span data-en="Professional Work" data-hi="प्रोफेशनल वर्क">Professional Work</span></h3><p class="text-gray-500 text-sm mt-2" data-en="Trained team, daily photo updates, finished on time." data-hi="ट्रेंड टीम, रोज़ फोटो अपडेट, समय पर फिनिश।">Trained team, daily photo updates, finished on time.</p></div>
+    <div class="rv tilt bg-white border border-gray-100 rounded-3xl p-6 shadow-lg"><p class="text-gold font-extrabold text-4xl font-serif2">04</p><h3 class="font-bold mt-2"><i class="fa-solid fa-file-shield mr-2 text-royal"></i><span data-en="Warranty Card" data-hi="वारंटी कार्ड">Warranty Card</span></h3><p class="text-gray-500 text-sm mt-2" data-en="Written warranty and a free checkup after payment." data-hi="पेमेंट के बाद लिखित वारंटी + फ्री चेकअप।">Written warranty and a free checkup after payment.</p></div>
   </div>
 </section>
 
 <!-- WORK GALLERY -->
 <section id="work" class="py-12 lg:py-16 bg-navy relative overflow-hidden">
-  <div class="max-w-7xl mx-auto px-4">
-    <p class="section-tag text-gold font-extrabold text-xs reveal">— OUR WORK</p>
-    <h2 class="font-serif2 text-white text-3xl sm:text-5xl font-semibold mt-2 reveal">Kaam bolta hai, <span class="italic text-gold">hum nahi</span></h2>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
-      <div class="rounded-3xl overflow-hidden img-zoom relative reveal"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80&auto=format&fit=crop" class="w-full h-64 object-cover" alt="Terrace project"><span class="absolute top-3 left-3 bg-gold text-navy text-xs font-extrabold px-3 py-1.5 rounded-full">TERRACE • JARIPATKA</span></div>
-      <div class="rounded-3xl overflow-hidden img-zoom relative reveal"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=700&q=80&auto=format&fit=crop" class="w-full h-64 object-cover" alt="Interior painting"><span class="absolute top-3 left-3 bg-white text-navy text-xs font-extrabold px-3 py-1.5 rounded-full">2BHK PAINTING • SADAR</span></div>
-      <div class="rounded-3xl overflow-hidden img-zoom relative reveal"><img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=700&q=80&auto=format&fit=crop" class="w-full h-64 object-cover" alt="Building exterior"><span class="absolute top-3 left-3 bg-sky2 text-white text-xs font-extrabold px-3 py-1.5 rounded-full">SOCIETY REPAINT • BEZANBAGH</span></div>
-      <div class="rounded-3xl overflow-hidden img-zoom relative reveal"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=700&q=80&auto=format&fit=crop" class="w-full h-64 object-cover" alt="Bathroom"><span class="absolute top-3 left-3 bg-white text-navy text-xs font-extrabold px-3 py-1.5 rounded-full">BATHROOM • LAKADGANJ</span></div>
-      <div class="rounded-3xl overflow-hidden img-zoom relative reveal"><img src="https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=700&q=80&auto=format&fit=crop" class="w-full h-64 object-cover" alt="Water tank"><span class="absolute top-3 left-3 bg-gold text-navy text-xs font-extrabold px-3 py-1.5 rounded-full">TANK • JARIPATKA</span></div>
-      <div class="rounded-3xl overflow-hidden img-zoom relative reveal"><img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=700&q=80&auto=format&fit=crop" class="w-full h-64 object-cover" alt="Bungalow"><span class="absolute top-3 left-3 bg-white text-navy text-xs font-extrabold px-3 py-1.5 rounded-full">BUNGALOW • NAGPUR</span></div>
+  <div id="workGiant" class="giant-word font-serif2 font-semibold absolute top-6 left-0 text-[19vw] leading-none select-none pointer-events-none" data-en="WORK SPEAKS • WORK SPEAKS" data-hi="काम बोलता है • काम बोलता है">WORK SPEAKS • WORK SPEAKS</div>
+  <div class="max-w-7xl mx-auto px-4 relative">
+    <p class="section-tag text-gold font-extrabold text-xs rv" data-en="— OUR WORK" data-hi="— हमारा काम">— OUR WORK</p>
+    <h2 class="rv font-serif2 text-white text-3xl sm:text-5xl font-semibold mt-2"><span data-en="Our work speaks, " data-hi="काम बोलता है, ">Our work speaks, </span><span class="italic text-gold" data-en="we don't" data-hi="हम नहीं">we don't</span></h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8" style="perspective:1200px">
+      <div class="rv tilt rounded-3xl overflow-hidden img-zoom relative" data-speed="0.94"><img loading="lazy" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80&auto=format&fit=crop" class="w-full h-64 object-cover" alt="Terrace project"><span class="absolute top-3 left-3 bg-gold text-navy text-xs font-extrabold px-3 py-1.5 rounded-full" data-en="TERRACE • JARIPATKA" data-hi="टेरेस • जरिपटका">TERRACE • JARIPATKA</span></div>
+      <div class="rv tilt rounded-3xl overflow-hidden img-zoom relative" data-speed="1.06"><img loading="lazy" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=700&q=80&auto=format&fit=crop" class="w-full h-64 object-cover" alt="Interior painting"><span class="absolute top-3 left-3 bg-white text-navy text-xs font-extrabold px-3 py-1.5 rounded-full" data-en="2BHK PAINTING • SADAR" data-hi="2BHK पेंटिंग • सदर">2BHK PAINTING • SADAR</span></div>
+      <div class="rv tilt rounded-3xl overflow-hidden img-zoom relative" data-speed="0.94"><img loading="lazy" src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=700&q=80&auto=format&fit=crop" class="w-full h-64 object-cover" alt="Building exterior"><span class="absolute top-3 left-3 bg-sky2 text-white text-xs font-extrabold px-3 py-1.5 rounded-full" data-en="SOCIETY REPAINT • BEZANBAGH" data-hi="सोसायटी रीपेंट • बेझनबाग">SOCIETY REPAINT • BEZANBAGH</span></div>
+      <div class="rv tilt rounded-3xl overflow-hidden img-zoom relative" data-speed="1.06"><img loading="lazy" src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=700&q=80&auto=format&fit=crop" class="w-full h-64 object-cover" alt="Bathroom"><span class="absolute top-3 left-3 bg-white text-navy text-xs font-extrabold px-3 py-1.5 rounded-full" data-en="BATHROOM • LAKADGANJ" data-hi="बाथरूम • लकड़गंज">BATHROOM • LAKADGANJ</span></div>
+      <div class="rv tilt rounded-3xl overflow-hidden img-zoom relative" data-speed="0.94"><img loading="lazy" src="https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=700&q=80&auto=format&fit=crop" class="w-full h-64 object-cover" alt="Water tank"><span class="absolute top-3 left-3 bg-gold text-navy text-xs font-extrabold px-3 py-1.5 rounded-full" data-en="TANK • JARIPATKA" data-hi="टैंक • जरिपटका">TANK • JARIPATKA</span></div>
+      <div class="rv tilt rounded-3xl overflow-hidden img-zoom relative" data-speed="1.06"><img loading="lazy" src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=700&q=80&auto=format&fit=crop" class="w-full h-64 object-cover" alt="Bungalow"><span class="absolute top-3 left-3 bg-white text-navy text-xs font-extrabold px-3 py-1.5 rounded-full" data-en="BUNGALOW • NAGPUR" data-hi="बंगला • नागपुर">BUNGALOW • NAGPUR</span></div>
     </div>
-    <p class="text-white/50 text-xs mt-5 text-center">* Demo photos hain — apne asli Before/After photos bhej do, yahi laga dunga.</p>
+    <p class="text-white/50 text-xs mt-5 text-center" data-en="* Demo photos — send your real before/after photos and we will put them here." data-hi="* डेमो फोटो हैं — अपने असली Before/After फोटो भेजें, यहीं लगा देंगे।">* Demo photos — send your real before/after photos and we will put them here.</p>
   </div>
 </section>
 
 <!-- REVIEWS -->
 <section id="reviews" class="max-w-7xl mx-auto px-4 py-12 lg:py-16">
-  <h2 class="font-serif2 text-3xl sm:text-5xl font-semibold text-center reveal">Customers <span class="italic text-royal">kya kehte hain</span></h2>
-  <div class="grid md:grid-cols-3 gap-5 mt-8">
-    <div class="bg-white rounded-3xl p-7 border border-gray-100 shadow-lg card-hover reveal"><p class="text-gold font-bold">★★★★★</p><p class="mt-3 text-gray-600 text-[15px] leading-relaxed">"2 saal se terrace leakage tha, 3 mistri fail ho gaye. Shalom walon ne chemical + membrane kiya, is monsoon me ek boond nahi aayi."</p><div class="flex items-center gap-3 mt-5"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=60&auto=format&fit=crop" class="w-11 h-11 rounded-full object-cover"><div><p class="font-bold text-sm">Ramesh Gupta</p><p class="text-gray-400 text-xs">Jaripatka, Nagpur</p></div></div></div>
-    <div class="rounded-3xl p-7 text-white shadow-xl card-hover reveal" style="background:linear-gradient(135deg,#0A1A3B,#123C9A)"><p class="text-gold font-bold">★★★★★</p><p class="mt-3 text-white/85 text-[15px] leading-relaxed">"Full 2BHK painting karwaya. Time par kaam, saaf-safai aur colour combination me full help. Rate bhi genuine laga."</p><div class="flex items-center gap-3 mt-5"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=60&auto=format&fit=crop" class="w-11 h-11 rounded-full object-cover"><div><p class="font-bold text-sm">Priya Nair</p><p class="text-white/60 text-xs">Sadar, Nagpur</p></div></div></div>
-    <div class="bg-white rounded-3xl p-7 border border-gray-100 shadow-lg card-hover reveal"><p class="text-gold font-bold">★★★★★</p><p class="mt-3 text-gray-600 text-[15px] leading-relaxed">"Society ka exterior + waterproofing ka 8 lakh ka kaam tha. Agreement, bill, warranty sab proper. Committee fully satisfied."</p><div class="flex items-center gap-3 mt-5"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=60&auto=format&fit=crop" class="w-11 h-11 rounded-full object-cover"><div><p class="font-bold text-sm">Francis D'Souza</p><p class="text-gray-400 text-xs">Secretary, Bezanbagh CHS</p></div></div></div>
+  <h2 class="rv font-serif2 text-3xl sm:text-5xl font-semibold text-center"><span data-en="What " data-hi="ग्राहक ">What </span><span class="italic text-royal" data-en="customers say" data-hi="क्या कहते हैं">customers say</span></h2>
+  <div class="grid md:grid-cols-3 gap-5 mt-8" style="perspective:1200px">
+    <div class="rv tilt bg-white rounded-3xl p-7 border border-gray-100 shadow-lg"><p class="text-gold font-bold">★★★★★</p><p class="mt-3 text-gray-600 text-[15px] leading-relaxed" data-en="“Terrace leakage for 2 years — 3 masons failed. Shalom did chemical + membrane work, and not a drop came in this monsoon.”" data-hi="“2 साल से टेरेस लीकेज था, 3 मिस्त्री फेल हो गए। शलोम वालों ने केमिकल + मेंब्रेन किया, इस मानसून में एक बूंद नहीं आई।”">“Terrace leakage for 2 years — 3 masons failed. Shalom did chemical + membrane work, and not a drop came in this monsoon.”</p><div class="flex items-center gap-3 mt-5"><img loading="lazy" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=60&auto=format&fit=crop" class="w-11 h-11 rounded-full object-cover" alt="Ramesh Gupta"><div><p class="font-bold text-sm" data-en="Ramesh Gupta" data-hi="रमेश गुप्ता">Ramesh Gupta</p><p class="text-gray-400 text-xs" data-en="Jaripatka, Nagpur" data-hi="जरिपटका, नागपुर">Jaripatka, Nagpur</p></div></div></div>
+    <div class="rv tilt rounded-3xl p-7 text-white shadow-xl" style="background:linear-gradient(135deg,#0A1A3B,#123C9A)"><p class="text-gold font-bold">★★★★★</p><p class="mt-3 text-white/85 text-[15px] leading-relaxed" data-en="“Got our full 2BHK painted. On-time work, cleanliness and full help with colour combinations. Genuine rates too.”" data-hi="“पूरा 2BHK पेंट करवाया। समय पर काम, साफ-सफाई और कलर कॉम्बिनेशन में पूरी मदद। रेट भी जेन्युइन लगा।”">“Got our full 2BHK painted. On-time work, cleanliness and full help with colour combinations. Genuine rates too.”</p><div class="flex items-center gap-3 mt-5"><img loading="lazy" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=60&auto=format&fit=crop" class="w-11 h-11 rounded-full object-cover" alt="Priya Nair"><div><p class="font-bold text-sm" data-en="Priya Nair" data-hi="प्रिया नायर">Priya Nair</p><p class="text-white/60 text-xs" data-en="Sadar, Nagpur" data-hi="सदर, नागपुर">Sadar, Nagpur</p></div></div></div>
+    <div class="rv tilt bg-white rounded-3xl p-7 border border-gray-100 shadow-lg"><p class="text-gold font-bold">★★★★★</p><p class="mt-3 text-gray-600 text-[15px] leading-relaxed" data-en="“Society exterior + waterproofing worth 8 lakh. Agreement, bills, warranty — everything proper. Committee fully satisfied.”" data-hi="“सोसायटी का एक्सटीरियर + वॉटरप्रूफिंग, 8 लाख का काम था। एग्रीमेंट, बिल, वारंटी सब प्रॉपर। कमेटी पूरी संतुष्ट।”">“Society exterior + waterproofing worth 8 lakh. Agreement, bills, warranty — everything proper. Committee fully satisfied.”</p><div class="flex items-center gap-3 mt-5"><img loading="lazy" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=60&auto=format&fit=crop" class="w-11 h-11 rounded-full object-cover" alt="Francis D'Souza"><div><p class="font-bold text-sm" data-en="Francis D'Souza" data-hi="फ्रांसिस डिसूज़ा">Francis D'Souza</p><p class="text-gray-400 text-xs" data-en="Secretary, Bezanbagh CHS" data-hi="सचिव, बेझनबाग CHS">Secretary, Bezanbagh CHS</p></div></div></div>
   </div>
 </section>
 
 <!-- FAQ -->
 <section id="faq" class="max-w-4xl mx-auto px-4 pb-12">
-  <h2 class="font-serif2 text-3xl sm:text-4xl font-semibold text-center reveal">Aksar puche jaane wale <span class="italic text-royal">sawaal</span></h2>
+  <h2 class="rv font-serif2 text-3xl sm:text-4xl font-semibold text-center" data-en="Frequently asked questions" data-hi="अक्सर पूछे जाने वाले सवाल">Frequently asked questions</h2>
   <div class="mt-7 space-y-3">
-    <details class="faq bg-white rounded-2xl border border-gray-100 shadow-sm px-6 py-5 reveal"><summary class="flex items-center justify-between cursor-pointer font-bold">Waterproofing ki warranty kitni milti hai?<span class="plus text-gold text-2xl leading-none">+</span></summary><p class="text-gray-500 text-sm mt-3">System par depend karta hai — chemical coating par 3–5 saal, membrane system par 7 saal tak written warranty milti hai.</p></details>
-    <details class="faq bg-white rounded-2xl border border-gray-100 shadow-sm px-6 py-5 reveal"><summary class="flex items-center justify-between cursor-pointer font-bold">Kya bina tod-phod bathroom leakage ruk sakta hai?<span class="plus text-gold text-2xl leading-none">+</span></summary><p class="text-gray-500 text-sm mt-3">Haan, 70% cases me injection grouting + epoxy joint filling se bina tile tode kaam ho jata hai. Inspection ke baad confirm hota hai.</p></details>
-    <details class="faq bg-white rounded-2xl border border-gray-100 shadow-sm px-6 py-5 reveal"><summary class="flex items-center justify-between cursor-pointer font-bold">Painting ka rate kaise lagta hai?<span class="plus text-gold text-2xl leading-none">+</span></summary><p class="text-gray-500 text-sm mt-3">Interior ₹18–35/sq.ft aur exterior ₹25–45/sq.ft (material sahit), wall condition aur paint brand par depend karta hai. Free measurement ke baad fixed quotation.</p></details>
-    <details class="faq bg-white rounded-2xl border border-gray-100 shadow-sm px-6 py-5 reveal"><summary class="flex items-center justify-between cursor-pointer font-bold">Payment kaise dena hai?<span class="plus text-gold text-2xl leading-none">+</span></summary><p class="text-gray-500 text-sm mt-3">30% advance, 40% material aane par, 30% kaam complete hone ke baad. UPI / bank transfer, proper bill ke saath.</p></details>
+    <details class="rv faq bg-white rounded-2xl border border-gray-100 shadow-sm px-6 py-5"><summary class="flex items-center justify-between gap-3 cursor-pointer font-bold"><span data-en="How much warranty do I get on waterproofing?" data-hi="वॉटरप्रूफिंग पर कितनी वारंटी मिलती है?">How much warranty do I get on waterproofing?</span><span class="plus text-gold text-2xl leading-none shrink-0 ml-3">+</span></summary><p class="text-gray-500 text-sm mt-3" data-en="It depends on the system — 3–5 years on chemical coating, up to 7 years written warranty on membrane systems." data-hi="सिस्टम पर निर्भर करता है — केमिकल कोटिंग पर 3–5 साल, मेंब्रेन सिस्टम पर 7 साल तक लिखित वारंटी मिलती है।">It depends on the system — 3–5 years on chemical coating, up to 7 years written warranty on membrane systems.</p></details>
+    <details class="rv faq bg-white rounded-2xl border border-gray-100 shadow-sm px-6 py-5"><summary class="flex items-center justify-between gap-3 cursor-pointer font-bold"><span data-en="Can bathroom leakage stop without breaking tiles?" data-hi="क्या बिना तोड़-फोड़ बाथरूम लीकेज रुक सकता है?">Can bathroom leakage stop without breaking tiles?</span><span class="plus text-gold text-2xl leading-none shrink-0 ml-3">+</span></summary><p class="text-gray-500 text-sm mt-3" data-en="Yes — in 70% of cases injection grouting and epoxy joint filling fix it without breaking a single tile. Confirmed after inspection." data-hi="हाँ, 70% मामलों में इंजेक्शन ग्राउटिंग + एपॉक्सी जॉइंट फिलिंग से बिना टाइल तोड़े काम हो जाता है। इंस्पेक्शन के बाद कन्फर्म होता है।">Yes — in 70% of cases injection grouting and epoxy joint filling fix it without breaking a single tile. Confirmed after inspection.</p></details>
+    <details class="rv faq bg-white rounded-2xl border border-gray-100 shadow-sm px-6 py-5"><summary class="flex items-center justify-between gap-3 cursor-pointer font-bold"><span data-en="How is painting charged?" data-hi="पेंटिंग का रेट कैसे लगता है?">How is painting charged?</span><span class="plus text-gold text-2xl leading-none shrink-0 ml-3">+</span></summary><p class="text-gray-500 text-sm mt-3" data-en="Interior ₹18–35/sq.ft and exterior ₹25–45/sq.ft including material, depending on wall condition and paint brand. Fixed quotation after free measurement." data-hi="इंटीरियर ₹18–35/वर्ग फुट और एक्सटीरियर ₹25–45/वर्ग फुट (मटेरियल सहित), दीवार की हालत और पेंट ब्रांड पर निर्भर। फ्री माप के बाद फिक्स कोटेशन।">Interior ₹18–35/sq.ft and exterior ₹25–45/sq.ft including material, depending on wall condition and paint brand. Fixed quotation after free measurement.</p></details>
+    <details class="rv faq bg-white rounded-2xl border border-gray-100 shadow-sm px-6 py-5"><summary class="flex items-center justify-between gap-3 cursor-pointer font-bold"><span data-en="How do I pay?" data-hi="पेमेंट कैसे देना है?">How do I pay?</span><span class="plus text-gold text-2xl leading-none shrink-0 ml-3">+</span></summary><p class="text-gray-500 text-sm mt-3" data-en="30% advance, 40% when material arrives, 30% after completion. UPI / bank transfer, with a proper bill." data-hi="30% एडवांस, 40% मटेरियल आने पर, 30% काम पूरा होने के बाद। UPI / बैंक ट्रांसफर, प्रॉपर बिल के साथ।">30% advance, 40% when material arrives, 30% after completion. UPI / bank transfer, with a proper bill.</p></details>
+  </div>
+</section>
+
+<!-- MONSOON CTA BANNER -->
+<section class="max-w-7xl mx-auto px-4 pb-12">
+  <div class="rv tilt relative overflow-hidden rounded-[2rem] shadow-2xl" style="background:linear-gradient(135deg,#061233,#0A1A3B 45%,#123C9A)">
+    <div class="orb w-[380px] h-[380px] -top-32 -right-24" data-depth="0.08" style="background:rgba(245,158,11,.22)"></div>
+    <div class="orb w-[280px] h-[280px] -bottom-24 -left-16" data-depth="0.12" style="background:rgba(14,165,233,.25)"></div>
+    <div class="relative p-8 sm:p-12 flex flex-col lg:flex-row items-start lg:items-center gap-6 justify-between">
+      <div class="max-w-2xl">
+        <p class="section-tag text-gold font-extrabold text-xs" data-en="— MONSOON READY" data-hi="— मानसून की तैयारी">— MONSOON READY</p>
+        <h2 class="font-serif2 text-white text-2xl sm:text-4xl font-semibold mt-2" data-en="Get waterproofing done before the monsoon arrives" data-hi="मानसून आने से पहले वॉटरप्रूफिंग करवाएं">Get waterproofing done before the monsoon arrives</h2>
+        <p class="text-white/65 text-sm sm:text-base mt-3" data-en="One spell of heavy rain is all it takes for small cracks to become big bills. Book a free inspection today." data-hi="एक भारी बारिश ही काफी है छोटी दरारों को बड़ा खर्च बनाने के लिए। आज ही फ्री इंस्पेक्शन बुक करें।">One spell of heavy rain is all it takes for small cracks to become big bills. Book a free inspection today.</p>
+      </div>
+      <div class="flex flex-wrap gap-3 shrink-0">
+        <span class="magnetic"><a href="tel:+919270507958" class="gold-btn text-navy font-extrabold px-7 py-4 rounded-2xl inline-block"><i class="fa-solid fa-phone mr-2"></i>+91 92705 07958</a></span>
+        <span class="magnetic"><a id="bannerWa" href="#" target="_blank" class="bg-[#22c55e] hover:bg-[#16a34a] transition text-white font-extrabold px-7 py-4 rounded-2xl inline-block shadow-xl"><i class="fa-brands fa-whatsapp mr-2 text-xl align-middle"></i><span data-en="WhatsApp" data-hi="व्हाट्सऐप">WhatsApp</span></a></span>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact" class="max-w-7xl mx-auto px-4 pb-16">
-  <div class="rounded-[2rem] overflow-hidden grid lg:grid-cols-2 shadow-2xl reveal" style="background:linear-gradient(135deg,#0A1A3B,#123C9A)">
+  <div class="rv tilt rounded-[2rem] overflow-hidden grid lg:grid-cols-2 shadow-2xl" style="background:linear-gradient(135deg,#0A1A3B,#123C9A);transform-style:flat">
     <div class="p-8 sm:p-12 text-white">
-      <p class="section-tag text-gold font-extrabold text-xs">— FREE SITE VISIT</p>
-      <h2 class="font-serif2 text-3xl sm:text-4xl font-semibold mt-2">Aaj hi apni <span class="italic text-gold">free inspection</span> book karo</h2>
-      <p class="text-white/65 mt-3 text-sm">Form bharo — WhatsApp par turant reply milega. Ya seedha call kar lo.</p>
+      <p class="section-tag text-gold font-extrabold text-xs" data-en="— FREE SITE VISIT" data-hi="— फ्री साइट विज़िट">— FREE SITE VISIT</p>
+      <h2 class="font-serif2 text-3xl sm:text-4xl font-semibold mt-2"><span data-en="Book your " data-hi="आज ही अपनी ">Book your </span><span class="italic text-gold" data-en="free inspection" data-hi="फ्री इंस्पेक्शन">free inspection</span><span data-en=" today" data-hi=" बुक करें"> today</span></h2>
+      <p class="text-white/65 mt-3 text-sm" data-en="Fill the form — get an instant reply on WhatsApp. Or just call us." data-hi="फॉर्म भरें — WhatsApp पर तुरंत जवाब मिलेगा। या सीधे कॉल कर लें।">Fill the form — get an instant reply on WhatsApp. Or just call us.</p>
       <form id="leadForm" class="mt-6 space-y-3">
-        <input required id="fName" placeholder="Aapka naam *" class="w-full rounded-2xl px-5 py-3.5 text-navy text-sm border-2 border-transparent" />
-        <input required id="fPhone" placeholder="Mobile number *" pattern="[0-9+ ]{10,15}" class="w-full rounded-2xl px-5 py-3.5 text-navy text-sm border-2 border-transparent" />
+        <input required id="fName" data-en-ph="Your name *" data-hi-ph="आपका नाम *" placeholder="Your name *" class="w-full rounded-2xl px-5 py-3.5 text-navy text-sm border-2 border-transparent" />
+        <input required id="fPhone" data-en-ph="Mobile number *" data-hi-ph="मोबाइल नंबर *" placeholder="Mobile number *" pattern="[0-9+ ]{10,15}" class="w-full rounded-2xl px-5 py-3.5 text-navy text-sm border-2 border-transparent" />
         <select id="fService" class="w-full rounded-2xl px-5 py-3.5 text-navy text-sm border-2 border-transparent">
-          <option>Terrace / Roof Leakage</option><option>Bathroom Leakage</option><option>Water Tank Waterproofing</option><option>Building / Interior Painting</option><option>Construction / Building Repair</option><option>Furniture Work</option><option>Fabrication Work</option><option>Plumbing Work</option><option>Electrician Work</option><option>Tiles Fitting</option>
+          <option data-en="Terrace / Roof Leakage" data-hi="टेरेस / रूफ लीकेज">Terrace / Roof Leakage</option><option data-en="Bathroom Leakage" data-hi="बाथरूम लीकेज">Bathroom Leakage</option><option data-en="Water Tank Waterproofing" data-hi="वॉटर टैंक वॉटरप्रूफिंग">Water Tank Waterproofing</option><option data-en="Building / Interior Painting" data-hi="बिल्डिंग / इंटीरियर पेंटिंग">Building / Interior Painting</option><option data-en="Construction / Building Repair" data-hi="कंस्ट्रक्शन / बिल्डिंग रिपेयर">Construction / Building Repair</option><option data-en="Furniture Work" data-hi="फर्नीचर वर्क">Furniture Work</option><option data-en="Fabrication Work" data-hi="फैब्रिकेशन वर्क">Fabrication Work</option><option data-en="Plumbing Work" data-hi="प्लंबिंग वर्क">Plumbing Work</option><option data-en="Electrician Work" data-hi="इलेक्ट्रीशियन वर्क">Electrician Work</option><option data-en="Tiles Fitting" data-hi="टाइल्स फिटिंग">Tiles Fitting</option>
         </select>
-        <textarea id="fMsg" rows="3" placeholder="Problem short me likho (area + issue)" class="w-full rounded-2xl px-5 py-3.5 text-navy text-sm border-2 border-transparent"></textarea>
-        <button class="gold-btn w-full text-navy font-extrabold py-4 rounded-2xl"><i class="fa-brands fa-whatsapp mr-2 text-lg"></i>WhatsApp Par Bhejo</button>
+        <textarea id="fMsg" rows="3" data-en-ph="Describe the problem briefly (area + issue)" data-hi-ph="प्रॉब्लम संक्षेप में लिखें (एरिया + समस्या)" placeholder="Describe the problem briefly (area + issue)" class="w-full rounded-2xl px-5 py-3.5 text-navy text-sm border-2 border-transparent"></textarea>
+        <span class="magnetic w-full"><button class="wa-btn w-full text-white font-extrabold py-4 rounded-2xl"><i class="fa-brands fa-whatsapp mr-2 text-lg"></i><span data-en="Send on WhatsApp" data-hi="व्हाट्सऐप पर भेजें">Send on WhatsApp</span></button></span>
       </form>
     </div>
     <div class="bg-cream p-8 sm:p-12">
       <div class="flex items-center gap-4">
         <img src="assets/logo-800.png" alt="Shalom Enterprises - full logo" class="h-16 object-contain bg-white rounded-2xl px-3 py-1.5 border border-orange-100 shadow-sm">
-        <div><h3 class="font-extrabold text-xl leading-tight">Direct sampark</h3><p class="text-xs text-gray-500 font-semibold">PROP. SARANG DESHKAR</p></div>
+        <div><h3 class="font-extrabold text-xl leading-tight" data-en="Contact directly" data-hi="सीधे संपर्क करें">Contact directly</h3><p class="text-xs text-gray-500 font-semibold" data-en="PROP. SARANG DESHKAR" data-hi="प्रो. सारंग देशकर">PROP. SARANG DESHKAR</p></div>
       </div>
       <div class="mt-5 space-y-4">
-        <a href="tel:+919270507958" class="flex items-center gap-4 bg-white rounded-2xl p-4 border border-orange-100 card-hover"><div class="w-12 h-12 rounded-2xl grid place-items-center text-white" style="background:linear-gradient(135deg,#0EA5E9,#123C9A)"><i class="fa-solid fa-phone"></i></div><div><p class="text-xs text-gray-400 font-semibold">CALL / WHATSAPP</p><p class="font-extrabold">+91 92705 07958</p><p class="text-xs text-gray-500 font-semibold mt-0.5">Also: 91752 66441 • 94219 79110</p></div></a>
-        <a href="mailto:support@shalomenterprises.co.in" class="flex items-center gap-4 bg-white rounded-2xl p-4 border border-orange-100 card-hover"><div class="w-12 h-12 rounded-2xl grid place-items-center text-white" style="background:linear-gradient(135deg,#EF4444,#B91C1C)"><i class="fa-solid fa-envelope"></i></div><div class="min-w-0"><p class="text-xs text-gray-400 font-semibold">EMAIL KARO</p><p class="font-extrabold text-sm break-all">support@shalomenterprises.co.in</p></div></a>
-        <div class="flex items-center gap-4 bg-white rounded-2xl p-4 border border-orange-100"><div class="w-12 h-12 rounded-2xl grid place-items-center text-white bg-green-500"><i class="fa-solid fa-location-dot"></i></div><div><p class="text-xs text-gray-400 font-semibold">SHOP ADDRESS</p><p class="font-bold text-sm">Ginger Mall, Jaripatka Chowk, Bezanbagh, Nagpur</p></div></div>
-        <div class="flex items-center gap-4 bg-white rounded-2xl p-4 border border-orange-100"><div class="w-12 h-12 rounded-2xl grid place-items-center text-white" style="background:linear-gradient(135deg,#F59E0B,#D97706)"><i class="fa-solid fa-clock"></i></div><div><p class="text-xs text-gray-400 font-semibold">TIMING</p><p class="font-bold text-sm">Mon–Sun, 8:00am – 8:00pm</p></div></div>
+        <a href="tel:+919270507958" class="flex items-center gap-4 bg-white rounded-2xl p-4 border border-orange-100"><div class="w-12 h-12 rounded-2xl grid place-items-center text-white" style="background:linear-gradient(135deg,#0EA5E9,#123C9A)"><i class="fa-solid fa-phone"></i></div><div><p class="text-xs text-gray-400 font-semibold" data-en="CALL / WHATSAPP" data-hi="कॉल / व्हाट्सऐप">CALL / WHATSAPP</p><p class="font-extrabold">+91 92705 07958</p><p class="text-xs text-gray-500 font-semibold mt-0.5">Also: 91752 66441 • 94219 79110</p></div></a>
+        <a href="mailto:support@shalomenterprises.co.in" class="flex items-center gap-4 bg-white rounded-2xl p-4 border border-orange-100"><div class="w-12 h-12 rounded-2xl grid place-items-center text-white" style="background:linear-gradient(135deg,#EF4444,#B91C1C)"><i class="fa-solid fa-envelope"></i></div><div class="min-w-0"><p class="text-xs text-gray-400 font-semibold" data-en="EMAIL US" data-hi="ईमेल करें">EMAIL US</p><p class="font-extrabold text-sm break-all">support@shalomenterprises.co.in</p></div></a>
+        <div class="flex items-center gap-4 bg-white rounded-2xl p-4 border border-orange-100"><div class="w-12 h-12 rounded-2xl grid place-items-center text-white bg-green-500"><i class="fa-solid fa-location-dot"></i></div><div><p class="text-xs text-gray-400 font-semibold" data-en="SHOP ADDRESS" data-hi="दुकान का पता">SHOP ADDRESS</p><p class="font-bold text-sm" data-en="Ginger Mall, Jaripatka Chowk, Bezanbagh, Nagpur" data-hi="जिंजर मॉल, जरिपटका चौक, बेझनबाग, नागपुर">Ginger Mall, Jaripatka Chowk, Bezanbagh, Nagpur</p></div></div>
+        <div class="flex items-center gap-4 bg-white rounded-2xl p-4 border border-orange-100"><div class="w-12 h-12 rounded-2xl grid place-items-center text-white" style="background:linear-gradient(135deg,#F59E0B,#D97706)"><i class="fa-solid fa-clock"></i></div><div><p class="text-xs text-gray-400 font-semibold" data-en="TIMING" data-hi="समय">TIMING</p><p class="font-bold text-sm" data-en="Mon–Sun, 8:00am – 8:00pm" data-hi="सोम–रवि, सुबह 8 – रात 8">Mon–Sun, 8:00am – 8:00pm</p></div></div>
       </div>
       <div class="rounded-2xl overflow-hidden mt-5 border border-orange-100">
         <iframe title="map" src="https://www.google.com/maps?q=Ginger+Mall+Jaripatka+Chowk+Bezanbagh+Nagpur&output=embed" class="w-full h-52" loading="lazy"></iframe>
       </div>
-      <p class="text-[11px] text-gray-400 mt-3">* Prop. Sarang Deshkar • Call / WhatsApp: +91 92705 07958 — Mon–Sun, 8am–8pm. Service: All Nagpur.</p>
+      <p class="text-[11px] text-gray-400 mt-3" data-en="* Prop. Sarang Deshkar • Call / WhatsApp: +91 92705 07958 — Mon–Sun, 8am–8pm. Service: All Nagpur." data-hi="* प्रो. सारंग देशकर • कॉल / व्हाट्सऐप: +91 92705 07958 — सोम–रवि, सुबह 8–रात 8। सेवा: पूरा नागपुर।">* Prop. Sarang Deshkar • Call / WhatsApp: +91 92705 07958 — Mon–Sun, 8am–8pm. Service: All Nagpur.</p>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer class="bg-[#050E28] text-white/70 py-10">
-  <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-5">
-    <div class="flex items-center gap-3">
-      <img src="assets/logo-mark-192.png" alt="Shalom Enterprises logo" class="w-11 h-11 rounded-xl bg-white object-cover p-0.5">
-      <p class="font-extrabold text-white">SHALOM <span class="text-gold">ENTERPRISES</span><br><span class="font-normal text-white/50 text-xs">Prop. Sarang Deshkar • Bezanbagh, Nagpur • support@shalomenterprises.co.in • © 2026</span></p>
+<footer class="bg-[#050E28] text-white/70 pt-12 pb-8">
+  <div class="max-w-7xl mx-auto px-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div>
+      <div class="flex items-center gap-3">
+        <img src="assets/logo-mark-192.png" alt="Shalom Enterprises logo" class="w-11 h-11 rounded-xl bg-white object-cover p-0.5">
+        <p class="font-extrabold text-white"><span data-en="SHALOM " data-hi="शलोम ">SHALOM </span><span class="text-gold" data-en="ENTERPRISES" data-hi="एंटरप्राइजेज">ENTERPRISES</span></p>
+      </div>
+      <p class="text-sm text-white/50 mt-4 leading-relaxed" data-en="Nagpur's trusted team for waterproofing, painting, construction and complete home repair — with written warranty." data-hi="वॉटरप्रूफिंग, पेंटिंग, कंस्ट्रक्शन और पूरे घर के रिपेयर के लिए नागपुर की भरोसेमंद टीम — लिखित वारंटी के साथ।">Nagpur's trusted team for waterproofing, painting, construction and complete home repair — with written warranty.</p>
+      <div class="flex gap-3 mt-4">
+        <a href="#" aria-label="Facebook" class="w-10 h-10 rounded-full glass grid place-items-center hover:text-gold"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-full glass grid place-items-center hover:text-gold"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" aria-label="YouTube" class="w-10 h-10 rounded-full glass grid place-items-center hover:text-gold"><i class="fa-brands fa-youtube"></i></a>
+      </div>
     </div>
-    <div class="flex gap-3">
-      <a href="#" class="w-10 h-10 rounded-full glass grid place-items-center hover:text-gold"><i class="fa-brands fa-facebook-f"></i></a>
-      <a href="#" class="w-10 h-10 rounded-full glass grid place-items-center hover:text-gold"><i class="fa-brands fa-instagram"></i></a>
-      <a href="#" class="w-10 h-10 rounded-full glass grid place-items-center hover:text-gold"><i class="fa-brands fa-youtube"></i></a>
+    <div>
+      <p class="font-extrabold text-white text-sm tracking-widest" data-en="QUICK LINKS" data-hi="त्वरित लिंक">QUICK LINKS</p>
+      <div class="flex flex-col gap-2.5 mt-4 text-sm">
+        <a href="#services" class="hover:text-gold transition" data-en="Services" data-hi="सेवाएँ">Services</a>
+        <a href="#work" class="hover:text-gold transition" data-en="Our Work" data-hi="हमारा काम">Our Work</a>
+        <a href="#reviews" class="hover:text-gold transition" data-en="Reviews" data-hi="रिव्यू">Reviews</a>
+        <a href="#contact" class="hover:text-gold transition" data-en="Free Site Visit" data-hi="फ्री साइट विज़िट">Free Site Visit</a>
+      </div>
     </div>
+    <div>
+      <p class="font-extrabold text-white text-sm tracking-widest" data-en="SERVICES" data-hi="सेवाएँ">SERVICES</p>
+      <div class="flex flex-col gap-2.5 mt-4 text-sm">
+        <a href="#services" class="hover:text-gold transition" data-en="Waterproofing" data-hi="वॉटरप्रूफिंग">Waterproofing</a>
+        <a href="#services" class="hover:text-gold transition" data-en="Building Painting" data-hi="बिल्डिंग पेंटिंग">Building Painting</a>
+        <a href="#services" class="hover:text-gold transition" data-en="Construction" data-hi="कंस्ट्रक्शन">Construction</a>
+        <a href="#services" class="hover:text-gold transition" data-en="Plumbing & Electrical" data-hi="प्लंबिंग और इलेक्ट्रिकल">Plumbing & Electrical</a>
+      </div>
+    </div>
+    <div>
+      <p class="font-extrabold text-white text-sm tracking-widest" data-en="CONTACT" data-hi="संपर्क">CONTACT</p>
+      <div class="flex flex-col gap-2.5 mt-4 text-sm">
+        <a href="tel:+919270507958" class="hover:text-gold transition font-bold text-white">+91 92705 07958</a>
+        <a href="mailto:support@shalomenterprises.co.in" class="hover:text-gold transition break-all">support@shalomenterprises.co.in</a>
+        <p class="text-white/50" data-en="Ginger Mall, Jaripatka Chowk, Bezanbagh, Nagpur" data-hi="जिंजर मॉल, जरिपटका चौक, बेझनबाग, नागपुर">Ginger Mall, Jaripatka Chowk, Bezanbagh, Nagpur</p>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-4 mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/40">
+    <p data-en="© 2026 Shalom Enterprises. All rights reserved." data-hi="© 2026 शलोम एंटरप्राइजेज। सर्वाधिकार सुरक्षित।">© 2026 Shalom Enterprises. All rights reserved.</p>
+    <p data-en="Prop. Sarang Deshkar • Bezanbagh, Nagpur" data-hi="प्रो. सारंग देशकर • बेझनबाग, नागपुर">Prop. Sarang Deshkar • Bezanbagh, Nagpur</p>
   </div>
 </footer>
 
-<!-- WHATSAPP FLOAT -->
-<a id="waFloat" href="#" target="_blank" class="fixed bottom-5 right-5 z-50 w-14 h-14 rounded-full bg-[#22c55e] grid place-items-center text-white text-2xl shadow-2xl hover:scale-110 transition"><i class="fa-brands fa-whatsapp"></i></a>
+<!-- FLOATING BUTTONS -->
+<span class="magnetic fixed bottom-5 right-5 z-50 inline-block"><a id="waFloat" href="#" target="_blank" aria-label="WhatsApp" class="w-14 h-14 rounded-full bg-[#22c55e] grid place-items-center text-white text-2xl shadow-2xl"><i class="fa-brands fa-whatsapp"></i></a></span>
+<button id="toTop" aria-label="Back to top" class="fixed bottom-5 left-5 z-50 w-12 h-12 rounded-full glass grid place-items-center text-gold text-lg opacity-0 pointer-events-none"><i class="fa-solid fa-arrow-up"></i></button>
 
 <script>
-  const phone = (typeof BUSINESS_PHONE !== 'undefined' ? BUSINESS_PHONE : '919270507958');
-  const waText = encodeURIComponent("Namaste! Mujhe Shalom Enterprises se Free Site Inspection chahiye. Meri problem: ");
-  const waLink = `https://wa.me/${phone}?text=${waText}`;
-  ['heroWa','waFloat'].forEach(id => { const el = document.getElementById(id); if(el) el.href = waLink; });
-  document.querySelectorAll('a[href^="tel:"]').forEach(a => a.href = `tel:+${phone}`);
+/* ---------- core (no libraries needed) ---------- */
+const phone = (typeof BUSINESS_PHONE !== 'undefined' ? BUSINESS_PHONE : '919270507958');
+const waText = encodeURIComponent("Namaste! Mujhe Shalom Enterprises se Free Site Inspection chahiye. Meri problem: ");
+const waLink = `https://wa.me/${phone}?text=${waText}`;
+['heroWa','waFloat','bannerWa'].forEach(id => { const el = document.getElementById(id); if(el) el.href = waLink; });
+document.querySelectorAll('a[href^="tel:"]').forEach(a => a.href = `tel:+${phone}`);
 
-  // mobile menu
-  const menuBtn = document.getElementById('menuBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-  menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+const menuBtn = document.getElementById('menuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 
-  // reveal on scroll
-  const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target);} }), {threshold:.12});
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+document.getElementById('leadForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const msg = `Namaste! *Shalom Enterprises*%0AName: ${encodeURIComponent(document.getElementById('fName').value)}%0APhone: ${encodeURIComponent(document.getElementById('fPhone').value)}%0AService: ${encodeURIComponent(document.getElementById('fService').value)}%0ADetails: ${encodeURIComponent(document.getElementById('fMsg').value)}`;
+  window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+});
+
+/* ---------- bilingual EN / Hindi ---------- */
+const META_DESC = {
+  en: "Shalom Enterprises - Nagpur's trusted waterproofing, building painting, construction, furniture & fabrication experts. Terrace waterproofing, interior/exterior painting, renovation with warranty. Free site inspection in Jaripatka, Bezanbagh, Nagpur.",
+  hi: "शलोम एंटरप्राइजेज — नागपुर के भरोसेमंद वॉटरप्रूफिंग, बिल्डिंग पेंटिंग, कंस्ट्रक्शन, फर्नीचर और फैब्रिकेशन एक्सपर्ट। टेरेस वॉटरप्रूफिंग, इंटीरियर/एक्सटीरियर पेंटिंग, वारंटी के साथ रेनोवेशन। जरिपटका, बेझनबाग, नागपुर में फ्री साइट इंस्पेक्शन।"
+};
+const PAGE_TITLE = {
+  en: "Shalom Enterprises | Waterproofing, Painting & Construction Experts",
+  hi: "शलोम एंटरप्राइजेज | वॉटरप्रूफिंग, पेंटिंग और कंस्ट्रक्शन एक्सपर्ट – नागपुर"
+};
+function setLang(l) {
+  try { localStorage.setItem('shalom-lang', l); } catch (e) {}
+  document.documentElement.lang = (l === 'hi') ? 'hi' : 'en';
+  document.body.classList.toggle('lang-hi', l === 'hi');
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const v = (l === 'hi') ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+    if (v !== null) el.textContent = v;
+  });
+  document.querySelectorAll('[data-en-ph]').forEach(el => {
+    el.placeholder = (l === 'hi') ? el.getAttribute('data-hi-ph') : el.getAttribute('data-en-ph');
+  });
+  document.querySelectorAll('[data-lang-btn]').forEach(b => {
+    const on = b.dataset.langBtn === l;
+    b.classList.toggle('bg-gold', on);
+    b.classList.toggle('text-navy', on);
+    b.classList.toggle('text-white/70', !on);
+  });
+  document.title = PAGE_TITLE[l] || PAGE_TITLE.en;
+  const md = document.querySelector('meta[name="description"]');
+  if (md) md.content = META_DESC[l] || META_DESC.en;
+  if (window.ScrollTrigger) setTimeout(() => window.ScrollTrigger.refresh(), 80);
+}
+let savedLang = 'en';
+try { savedLang = localStorage.getItem('shalom-lang') || 'en'; } catch (e) {}
+document.querySelectorAll('[data-lang-btn]').forEach(b => b.addEventListener('click', () => setLang(b.dataset.langBtn)));
+setLang(savedLang);
+
+/* ---------- immersive motion (GSAP + Lenis) ---------- */
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer = window.matchMedia('(pointer: fine)').matches;
+
+function initCounters(scope) {
+  (scope || document).querySelectorAll('.counter').forEach(el => {
+    if (el.dataset.done) return; el.dataset.done = '1';
+    const target = +el.dataset.target; let cur = 0;
+    const step = Math.max(1, Math.ceil(target / 60));
+    const t = setInterval(() => { cur += step; if (cur >= target) { cur = target; clearInterval(t); } el.textContent = cur.toLocaleString('en-IN'); }, 30);
+  });
+}
+
+// preloader
+const loader = document.getElementById('loader');
+const loadBar = document.getElementById('loadBar');
+if (window.gsap && !reduced && loader) gsap.to(loadBar, { width: '82%', duration: 1.1, ease: 'power2.out' });
+function hideLoader() {
+  if (!loader || loader.dataset.done) return; loader.dataset.done = '1';
+  if (window.gsap && !reduced) {
+    gsap.to(loadBar, { width: '100%', duration: 0.3 });
+    gsap.to(loader, { opacity: 0, duration: 0.5, delay: 0.3, onComplete: () => loader.remove() });
+  } else loader.remove();
+}
+window.addEventListener('load', () => setTimeout(hideLoader, 500));
+setTimeout(hideLoader, 3200);
+
+// back to top
+const toTop = document.getElementById('toTop');
+function toggleToTop(y) {
+  const show = y > 600;
+  toTop.style.opacity = show ? '1' : '0';
+  toTop.style.pointerEvents = show ? 'auto' : 'none';
+}
+
+if (window.gsap && window.ScrollTrigger && !reduced) {
+  gsap.registerPlugin(ScrollTrigger);
+
+  let lenis = null;
+  if (window.Lenis) {
+    lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
+    lenis.on('scroll', (e) => { ScrollTrigger.update(); toggleToTop(e.scroll); });
+    gsap.ticker.add(t => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+  const scrollToTarget = (sel) => {
+    const el = document.querySelector(sel);
+    if (!el) return;
+    if (lenis) lenis.scrollTo(el, { offset: -70, duration: 1.4 });
+    else el.scrollIntoView({ behavior: 'smooth' });
+  };
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (href.length > 1) { e.preventDefault(); mobileMenu.classList.add('hidden'); scrollToTarget(href); }
+    });
+  });
+  toTop.addEventListener('click', () => { if (lenis) lenis.scrollTo(0, { duration: 1.4 }); else window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+  // progress bar + nav state
+  const progress = document.getElementById('progress');
+  const nav = document.getElementById('nav');
+  ScrollTrigger.create({
+    trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3,
+    onUpdate: self => {
+      progress.style.transform = `scaleX(${self.progress})`;
+      nav.classList.toggle('scrolled', self.scroll() > 40);
+    }
+  });
+
+  // hero intro
+  gsap.timeline({ defaults: { ease: 'power3.out' } })
+    .from('#home .h-line > span', { yPercent: 115, duration: 1, stagger: 0.12 }, 0.1)
+    .from('#heroCopy .rv', { y: 34, opacity: 0, duration: 0.9, stagger: 0.1 }, 0.35)
+    .from('#heroImgWrap', { clipPath: 'inset(8% 8% 8% 8% round 2rem)', scale: 0.96, opacity: 0, duration: 1.2 }, 0.3)
+    .from('#heroImgWrap img', { scale: 1.25, duration: 1.6, ease: 'power2.out' }, 0.3);
+
+  // generic reveals
+  gsap.utils.toArray('.rv').forEach(el => {
+    if (el.closest('#heroCopy')) return;
+    gsap.from(el, {
+      y: 46, opacity: 0, duration: 0.9, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+    });
+  });
+
+  // scroll parallax layers
+  gsap.utils.toArray('[data-speed]').forEach(el => {
+    const s = parseFloat(el.dataset.speed) || 1;
+    const off = (s - 1) * 160;
+    gsap.fromTo(el, { y: off }, {
+      y: -off, ease: 'none',
+      scrollTrigger: { trigger: el.closest('section') || el, start: 'top bottom', end: 'bottom top', scrub: 1 }
+    });
+  });
+
+  // image inner parallax
+  gsap.utils.toArray('.pimg img').forEach(img => {
+    gsap.fromTo(img, { yPercent: -7 }, {
+      yPercent: 7, ease: 'none',
+      scrollTrigger: { trigger: img.closest('section'), start: 'top bottom', end: 'bottom top', scrub: 1 }
+    });
+  });
+
+  // giant background word drift
+  const giant = document.getElementById('workGiant');
+  if (giant) gsap.fromTo(giant, { xPercent: 4 }, {
+    xPercent: -22, ease: 'none',
+    scrollTrigger: { trigger: '#work', start: 'top bottom', end: 'bottom top', scrub: 1 }
+  });
+
+  // services: pinned horizontal journey on desktop
+  const mm = gsap.matchMedia();
+  mm.add('(min-width: 1024px)', () => {
+    const track = document.getElementById('svcTrack');
+    const pin = document.getElementById('svcPin');
+    const dist = () => Math.max(0, track.scrollWidth - pin.clientWidth + 32);
+    gsap.to(track, {
+      x: () => -dist(), ease: 'none',
+      scrollTrigger: { trigger: pin, start: 'top top+=72', end: () => '+=' + (dist() + 200), pin: true, scrub: 1, invalidateOnRefresh: true, anticipatePin: 1 }
+    });
+  });
 
   // counters
-  const cio = new IntersectionObserver(es => es.forEach(e => {
-    if(!e.isIntersecting) return; cio.unobserve(e.target);
-    const el = e.target, target = +el.dataset.target; let cur = 0;
-    const step = Math.max(1, Math.ceil(target/60));
-    const t = setInterval(()=>{ cur += step; if(cur >= target){cur = target; clearInterval(t);} el.textContent = cur.toLocaleString('en-IN'); }, 30);
-  }), {threshold:.5});
-  document.querySelectorAll('.counter').forEach(el => cio.observe(el));
-
-  // lead form -> whatsapp
-  document.getElementById('leadForm').addEventListener('submit', e => {
-    e.preventDefault();
-    const msg = `Namaste! *Shalom Enterprises*%0AName: ${encodeURIComponent(document.getElementById('fName').value)}%0APhone: ${encodeURIComponent(document.getElementById('fPhone').value)}%0AService: ${encodeURIComponent(document.getElementById('fService').value)}%0ADetails: ${encodeURIComponent(document.getElementById('fMsg').value)}`;
-    window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+  document.querySelectorAll('.counter').forEach(el => {
+    ScrollTrigger.create({ trigger: el, start: 'top 92%', once: true, onEnter: () => initCounters(el.parentElement.parentElement) });
   });
+
+  // mouse parallax + cursor glow (desktop)
+  if (finePointer) {
+    const layers = document.querySelectorAll('[data-depth]');
+    let tx = 0, ty = 0, cx = 0, cy = 0;
+    window.addEventListener('pointermove', e => {
+      tx = (e.clientX / window.innerWidth - 0.5);
+      ty = (e.clientY / window.innerHeight - 0.5);
+    });
+    gsap.ticker.add(() => {
+      cx += (tx - cx) * 0.06; cy += (ty - cy) * 0.06;
+      layers.forEach(l => {
+        const d = parseFloat(l.dataset.depth) || 0.08;
+        l.style.translate = `${(-cx * d * 900).toFixed(1)}px ${(-cy * d * 900).toFixed(1)}px`;
+      });
+      const cur = document.getElementById('cursor');
+      if (cur) cur.style.transform = `translate(${(cx * window.innerWidth + window.innerWidth / 2).toFixed(0)}px, ${(cy * window.innerHeight + window.innerHeight / 2).toFixed(0)}px)`;
+    });
+    const cursor = document.getElementById('cursor');
+    if (cursor) cursor.style.opacity = '1';
+
+    document.querySelectorAll('.tilt').forEach(card => {
+      card.addEventListener('pointerenter', () => { card.style.transition = 'transform .12s ease-out, box-shadow .35s'; });
+      card.addEventListener('pointermove', e => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `perspective(950px) rotateY(${(px * 9).toFixed(2)}deg) rotateX(${(-py * 9).toFixed(2)}deg) translateZ(0)`;
+      });
+      card.addEventListener('pointerleave', () => { card.style.transition = 'transform .6s cubic-bezier(.2,.8,.2,1), box-shadow .35s'; card.style.transform = ''; });
+    });
+
+    document.querySelectorAll('.magnetic').forEach(el => {
+      el.addEventListener('pointermove', e => {
+        const r = el.getBoundingClientRect();
+        el.style.transform = `translate(${((e.clientX - r.left - r.width / 2) * 0.18).toFixed(1)}px, ${((e.clientY - r.top - r.height / 2) * 0.18).toFixed(1)}px)`;
+      });
+      el.addEventListener('pointerleave', () => { el.style.transform = ''; });
+    });
+  }
+
+  window.addEventListener('load', () => ScrollTrigger.refresh());
+} else {
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { initCounters(e.target); io.unobserve(e.target); }
+  }), { threshold: 0.4 });
+  document.querySelectorAll('.counter').forEach(el => io.observe(el));
+  document.getElementById('progress').style.display = 'none';
+  window.addEventListener('scroll', () => toggleToTop(window.scrollY), { passive: true });
+  toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+}
 </script>
 </body>
 </html>
