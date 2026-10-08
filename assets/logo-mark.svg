@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="topArc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7BC8A4"/>
+      <stop offset="1" stop-color="#3D8B8B"/>
+    </linearGradient>
+    <linearGradient id="botArc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#B388EB"/>
+      <stop offset="1" stop-color="#6D28D9"/>
+    </linearGradient>
+  </defs>
+  <!-- top person: head + crescent arm -->
+  <circle cx="348" cy="118" r="52" fill="#8FCEB0"/>
+  <path d="M250 60 C 170 90, 130 160, 160 235 C 175 270, 205 295 240 305 C 200 305, 150 280, 130 225 C 108 165, 150 95, 250 60 Z" fill="url(#topArc)"/>
+  <!-- bottom person: head + crescent arm -->
+  <circle cx="164" cy="394" r="52" fill="#7C3AED"/>
+  <path d="M262 452 C 342 422, 382 352, 352 277 C 337 242, 307 217, 272 207 C 312 207, 362 232, 382 287 C 404 347, 362 417, 262 452 Z" fill="url(#botArc)"/>
+</svg>
